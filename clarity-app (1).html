@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Clarity Tool, Christine Walker</title>
+<meta name="description" content="A conversational AI coaching session that produces your complete marketing user story.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sand:#F5F0E8;--sand-dark:#EDE6D8;--teal:#3D8B7A;--teal-dark:#2E6B5E;
+  --teal-light:#6AADA0;--clay:#BF6B3F;--honey:#C8953A;
+  --charcoal:#2A2420;--charcoal-soft:#4A3F38;--muted:#9E9089;
+  --border:#DDD5C8;--white:#FDFAF6;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Source Sans 3',sans-serif;background:var(--sand);color:var(--charcoal);display:flex;flex-direction:column;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes pulse{0%,100%{opacity:.5;transform:scale(1);}50%{opacity:1;transform:scale(1.1);}}
+@keyframes bubbleIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+/* NAV */
+nav{
+  flex-shrink:0;height:60px;
+  background:rgba(245,240,232,.97);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:0 32px;display:flex;justify-content:space-between;align-items:center;
+  z-index:100;
+}
+.nav-logo{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--charcoal);text-decoration:none;display:flex;align-items:center;gap:9px;}
+.nav-dot{width:7px;height:7px;background:var(--teal);border-radius:50%;animation:pulse 2.5s ease-in-out infinite;}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-pill{font-size:12px;font-weight:600;color:var(--muted);background:var(--sand-dark);padding:5px 12px;border-radius:20px;display:none;}
+.nav-pill.show{display:block;}
+.nav-btn{font-size:12px;font-weight:600;padding:7px 16px;border-radius:3px;border:1.5px solid var(--border);background:transparent;color:var(--charcoal-soft);cursor:pointer;transition:all .15s;text-decoration:none;display:inline-block;}
+.nav-btn:hover{border-color:var(--teal);color:var(--teal);}
+.nav-btn.on{color:var(--teal);border-color:rgba(61,139,122,.3);background:rgba(61,139,122,.07);}
+
+/* MAIN LAYOUT */
+.app{flex:1;display:grid;grid-template-columns:280px 1fr;overflow:hidden;}
+
+/* SIDEBAR */
+.sidebar{background:var(--charcoal);display:flex;flex-direction:column;overflow:hidden;border-right:1px solid rgba(255,255,255,.05);}
+.sb-head{padding:20px 18px;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0;}
+.sb-user{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+.sb-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--teal-light));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--white);flex-shrink:0;}
+.sb-name{font-size:13px;font-weight:700;color:var(--white);}
+.sb-plan{font-size:11px;color:rgba(255,255,255,.3);}
+.sb-progress{margin-top:16px;}
+.sb-prog-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:8px;}
+.sb-prog-bar{height:3px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;}
+.sb-prog-fill{height:100%;background:var(--teal);border-radius:2px;transition:width .5s ease;}
+.sb-prog-txt{font-size:11px;color:rgba(255,255,255,.3);margin-top:6px;}
+
+.sb-answers{flex:1;overflow-y:auto;padding:16px 18px;}
+.sb-sec{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:10px;}
+.ans-item{border:1px solid rgba(255,255,255,.07);border-radius:7px;margin-bottom:7px;overflow:hidden;animation:fadeIn .3s ease;}
+.ans-toggle{width:100%;padding:10px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;background:none;border:none;text-align:left;transition:background .15s;}
+.ans-toggle:hover{background:rgba(255,255,255,.04);}
+.ans-qnum{width:20px;height:20px;flex-shrink:0;background:rgba(61,139,122,.2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--teal-light);}
+.ans-qtitle{font-size:11px;font-weight:600;color:rgba(255,255,255,.65);flex:1;line-height:1.3;}
+.ans-score{font-size:10px;font-weight:700;color:var(--teal-light);}
+.ans-arrow{color:rgba(255,255,255,.2);font-size:10px;transition:transform .2s;}
+.ans-item.open .ans-arrow{transform:rotate(180deg);}
+.ans-body{display:none;padding:8px 12px 12px;font-size:11px;line-height:1.7;color:rgba(255,255,255,.4);border-top:1px solid rgba(255,255,255,.06);}
+.ans-item.open .ans-body{display:block;animation:fadeIn .2s ease;}
+
+/* CHAT */
+.chat-shell{display:flex;flex-direction:column;overflow:hidden;}
+.chat-top{flex-shrink:0;padding:14px 24px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.chat-top-left h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--charcoal);}
+.chat-top-left p{font-size:12px;color:var(--muted);margin-top:1px;}
+.q-pill{display:flex;align-items:center;gap:8px;background:var(--sand);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--charcoal-soft);}
+.q-pill-bar{width:64px;height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
+.q-pill-fill{height:100%;background:var(--teal);border-radius:2px;transition:width .5s ease;}
+
+/* MESSAGES */
+.messages{flex:1;overflow-y:auto;padding:24px 28px;display:flex;flex-direction:column;gap:4px;scroll-behavior:smooth;}
+
+/* AI message */
+.msg-ai-wrap{display:flex;gap:10px;align-items:flex-start;max-width:82%;margin-bottom:16px;animation:bubbleIn .35s ease both;}
+.ai-av{width:28px;height:28px;flex-shrink:0;border-radius:7px;background:rgba(61,139,122,.12);display:flex;align-items:center;justify-content:center;font-size:12px;margin-top:2px;}
+.ai-msg{background:var(--white);border:1px solid var(--border);border-radius:2px 12px 12px 12px;padding:13px 17px;font-size:14px;line-height:1.8;color:var(--charcoal-soft);}
+.ai-msg.question{border-left:3px solid var(--teal);}
+.ai-msg.confirmed{background:rgba(61,139,122,.06);border-color:rgba(61,139,122,.2);}
+.ai-msg.pushing{background:rgba(191,107,63,.05);border-color:rgba(191,107,63,.15);}
+.ai-q-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.ai-q-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--charcoal);line-height:1.3;margin-bottom:6px;}
+.ai-q-hint{font-size:13px;color:var(--charcoal-soft);font-style:italic;line-height:1.6;}
+
+/* USER message */
+.msg-user-wrap{display:flex;justify-content:flex-end;margin-bottom:16px;animation:bubbleIn .3s ease both;}
+.user-msg{background:var(--teal);color:var(--white);border-radius:12px 12px 2px 12px;padding:12px 17px;font-size:14px;line-height:1.75;max-width:78%;}
+
+/* SYSTEM message - answer stored */
+.msg-system{text-align:center;margin:8px 0 20px;animation:fadeIn .3s ease;}
+.system-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(61,139,122,.1);border:1px solid rgba(61,139,122,.2);color:var(--teal);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.5px;}
+
+/* THINKING */
+.think-wrap{display:flex;gap:10px;align-items:flex-start;max-width:82%;margin-bottom:16px;animation:fadeIn .3s ease;}
+.think-bubble{background:var(--sand-dark);border:1px solid var(--border);border-radius:2px 12px 12px 12px;padding:13px 17px;}
+.think-dots{display:flex;gap:5px;}
+.td{width:6px;height:6px;background:var(--muted);border-radius:50%;animation:pulse 1.4s ease infinite;}
+.td:nth-child(2){animation-delay:.25s;}.td:nth-child(3){animation-delay:.5s;}
+
+/* PAYWALL blocker */
+.paywall-msg{margin:12px 0 20px;animation:bubbleIn .4s ease;}
+.pw-inner{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:32px;text-align:center;max-width:520px;box-shadow:0 12px 40px rgba(42,36,32,.08);position:relative;overflow:hidden;}
+.pw-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--teal-light));}
+.pw-icon{font-size:28px;margin-bottom:14px;}
+.pw-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;margin-bottom:8px;line-height:1.2;}
+.pw-title em{font-style:italic;color:var(--teal);}
+.pw-sub{font-size:14px;line-height:1.75;color:var(--charcoal-soft);margin-bottom:20px;font-weight:300;}
+.pw-price{font-family:'Playfair Display',serif;font-size:40px;font-weight:700;color:var(--charcoal);margin-bottom:4px;}
+.pw-price-note{font-size:12px;color:var(--muted);margin-bottom:24px;}
+.pw-feats{text-align:left;margin-bottom:24px;display:flex;flex-direction:column;gap:7px;}
+.pw-feat{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--charcoal-soft);}
+.pw-feat-dot{width:16px;height:16px;flex-shrink:0;background:rgba(61,139,122,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--teal);margin-top:2px;}
+
+/* REG FORM inline */
+.reg-form{margin-top:16px;text-align:left;}
+.rf-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.rf-label{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--charcoal-soft);margin-bottom:4px;display:block;}
+.rf-input{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:5px;font-size:14px;font-family:'Source Sans 3',sans-serif;background:var(--sand);color:var(--charcoal);outline:none;transition:border-color .15s;margin-bottom:10px;}
+.rf-input:focus{border-color:var(--teal);background:var(--white);}
+.stripe-mock{background:var(--sand);border:1.5px dashed var(--border);border-radius:5px;padding:14px;margin-bottom:14px;}
+.stripe-mock-lbl{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:8px;}
+.stripe-mock-row{display:flex;gap:6px;}
+.stripe-mock-f{background:var(--white);border:1px solid var(--border);border-radius:3px;padding:8px 10px;font-size:12px;color:var(--muted);flex:1;}
+.stripe-mock-note{font-size:10px;color:var(--muted);margin-top:6px;}
+.btn-pay{width:100%;padding:14px;background:var(--teal);color:var(--white);border:none;border-radius:5px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px;}
+.btn-pay:hover{background:var(--teal-dark);}
+.secure-note{text-align:center;font-size:11px;color:var(--muted);margin-top:8px;}
+
+/* INPUT */
+.input-area{flex-shrink:0;padding:14px 24px 18px;background:var(--white);border-top:1px solid var(--border);}
+.input-row{display:flex;gap:10px;align-items:flex-end;}
+.chat-ta{
+  flex:1;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;
+  font-size:14px;line-height:1.6;font-family:'Source Sans 3',sans-serif;
+  background:var(--sand);color:var(--charcoal);resize:none;
+  min-height:46px;max-height:180px;outline:none;
+  transition:border-color .15s,background .15s;overflow-y:hidden;
+}
+.chat-ta:focus{border-color:var(--teal);background:var(--white);}
+.chat-ta:disabled{opacity:.5;cursor:not-allowed;}
+.send-btn{
+  width:44px;height:44px;flex-shrink:0;background:var(--teal);color:var(--white);
+  border:none;border-radius:10px;cursor:pointer;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s,opacity .15s;opacity:.35;
+}
+.send-btn:hover{background:var(--teal-dark);}
+.send-btn.lit{opacity:1;}
+.input-hint{font-size:11px;color:var(--muted);margin-top:7px;font-style:italic;}
+
+/* STORY OUTPUT */
+.story-wrap{flex:1;overflow-y:auto;padding:28px;}
+.story-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:36px;margin-bottom:20px;animation:fadeUp .4s ease;}
+.story-card h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--teal);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.story-card p{font-size:15px;line-height:1.9;color:var(--charcoal-soft);}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;z-index:500;background:rgba(42,36,32,.7);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:24px;}
+.modal-bg.hidden{display:none;}
+.modal-box{background:var(--white);border-radius:14px;padding:36px;max-width:440px;width:100%;box-shadow:0 28px 72px rgba(42,36,32,.18);animation:fadeUp .3s ease;}
+.modal-box h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:8px;}
+.modal-box p{font-size:13px;line-height:1.7;color:var(--charcoal-soft);margin-bottom:20px;}
+.ptabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+.ptab{padding:6px 14px;border-radius:3px;font-size:12px;font-weight:700;border:1.5px solid var(--border);background:transparent;color:var(--charcoal-soft);cursor:pointer;transition:all .12s;}
+.ptab.on{background:var(--teal);color:var(--white);border-color:var(--teal);}
+.key-in{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:5px;font-size:14px;font-family:'Source Sans 3',sans-serif;background:var(--sand);color:var(--charcoal);outline:none;transition:border-color .15s;margin-bottom:6px;}
+.key-in:focus{border-color:var(--teal);}
+.key-note{font-size:12px;color:var(--muted);margin-bottom:16px;}
+.key-note a{color:var(--teal);}
+.modal-acts{display:flex;gap:8px;}
+.m-p{flex:1;padding:11px;background:var(--teal);color:var(--white);border:none;border-radius:5px;font-size:13px;font-weight:700;cursor:pointer;}
+.m-p:hover{background:var(--teal-dark);}
+.m-s{padding:11px 16px;background:transparent;color:var(--charcoal-soft);border:1.5px solid var(--border);border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;}
+.m-s:hover{border-color:var(--teal);color:var(--teal);}
+
+/* ONBOARDING SCREEN */
+.onboard{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 24px;}
+.onboard-card{max-width:560px;width:100%;text-align:center;}
+.ob-eyebrow{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:10px;}
+.ob-eyebrow::before,.ob-eyebrow::after{content:'';flex:1;max-width:32px;height:1px;background:var(--border);}
+.ob-title{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,48px);font-weight:700;line-height:1.1;letter-spacing:-.5px;margin-bottom:16px;}
+.ob-title em{font-style:italic;color:var(--teal);}
+.ob-sub{font-size:16px;line-height:1.75;color:var(--charcoal-soft);font-weight:300;margin-bottom:32px;}
+.ob-how{display:flex;flex-direction:column;gap:10px;margin-bottom:36px;text-align:left;}
+.ob-step{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--white);border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--charcoal-soft);line-height:1.6;}
+.ob-step-n{width:24px;height:24px;flex-shrink:0;background:var(--teal);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:1px;}
+.btn-start{width:100%;padding:16px;background:var(--teal);color:var(--white);border:none;border-radius:6px;font-size:15px;font-weight:700;cursor:pointer;transition:background .2s;letter-spacing:.3px;}
+.btn-start:hover{background:var(--teal-dark);}
+.ob-note{font-size:12px;color:var(--muted);margin-top:12px;}
+
+@media(max-width:800px){
+  .app{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  nav{padding:0 20px;}
+  .messages{padding:20px 18px;}
+  .input-area{padding:12px 18px 16px;}
+  .chat-top{padding:12px 18px;}
+}
+</style>
+</head>
+<body>
+
+<!-- API MODAL -->
+<div class="modal-bg hidden" id="apiModal">
+  <div class="modal-box">
+    <h3>Your AI Settings</h3>
+    <p>Choose your AI provider and paste your key below. Saved permanently to your profile so you never have to re-enter it.</p>
+    <div class="ptabs">
+      <button class="ptab on" data-provider="anthropic" onclick="setProvider('anthropic',this)">Claude 4.6</button>
+      <button class="ptab" data-provider="openai" onclick="setProvider('openai',this)">GPT-4o</button>
+      <button class="ptab" data-provider="gemini" onclick="setProvider('gemini',this)">Gemini</button>
+    </div>
+    <input type="password" class="key-in" id="keyIn" placeholder="Paste your API key here...">
+    <p class="key-note" id="keyNote">Get your Claude key at <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a></p>
+    <div id="profileBadge" style="display:none;margin-bottom:14px;padding:10px 14px;background:rgba(61,139,122,.07);border:1px solid rgba(61,139,122,.2);border-radius:6px;font-size:12px;color:var(--teal);">
+      <span id="profileBadgeTxt"></span>
+      <button onclick="clearProfile()" style="margin-left:10px;font-size:11px;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline;">Clear saved key</button>
+    </div>
+    <div class="modal-acts">
+      <button class="m-p" onclick="saveKey()">Save to Profile</button>
+      <button class="m-s" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo"><span class="nav-dot"></span>Customer Clarity</a>
+  <div class="nav-right">
+    <span class="nav-pill" id="navPill"></span>
+    <button class="nav-btn" id="navAiBtn" onclick="openModal()">Connect AI</button>
+    <a href="index.html" class="nav-btn">Home</a>
+  </div>
+</nav>
+
+<!-- APP -->
+<div class="app" id="appShell" style="display:none">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sb-head">
+      <div class="sb-user">
+        <div class="sb-av" id="sbAv">?</div>
+        <div>
+          <div class="sb-name" id="sbName">Starting session...</div>
+          <div class="sb-plan" id="sbPlan">Clarity Session</div>
+        </div>
+      </div>
+      <div class="sb-progress">
+        <div class="sb-prog-label">Progress</div>
+        <div class="sb-prog-bar"><div class="sb-prog-fill" id="sbProgFill" style="width:0%"></div></div>
+        <div class="sb-prog-txt" id="sbProgTxt">0 of 15 questions answered</div>
+      </div>
+    </div>
+    <div class="sb-answers">
+      <div class="sb-sec">Locked Answers</div>
+      <div id="answersList"><p style="font-size:12px;color:rgba(255,255,255,.2);font-style:italic">Your answers will appear here as the conversation progresses.</p></div>
+    </div>
+  </div>
+
+  <!-- CHAT -->
+  <div class="chat-shell">
+    <div class="chat-top">
+      <div class="chat-top-left">
+        <h3 id="chatTopTitle">Customer Clarity</h3>
+        <p id="chatTopSub">AI-coached conversation to build your marketing story</p>
+      </div>
+      <div class="q-pill">
+        <div class="q-pill-bar"><div class="q-pill-fill" id="qPillFill" style="width:0%"></div></div>
+        <span id="qPillTxt">0 / 15</span>
+      </div>
+    </div>
+    <div class="messages" id="messages"></div>
+    <div class="input-area" id="inputArea">
+      <div class="input-row">
+        <textarea class="chat-ta" id="chatTa"
+          placeholder="Reply here... Enter to send, Shift+Enter for a new line"
+          oninput="onInput()"
+          onkeydown="onKey(event)"
+          rows="1"></textarea>
+        <button class="send-btn" id="sendBtn" onclick="send()">➤</button>
+      </div>
+      <div class="input-hint">Enter to send, Shift+Enter for a new line</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ONBOARD SCREEN -->
+<div class="onboard" id="onboardScreen">
+  <div class="onboard-card" style="animation:fadeUp .6s ease both">
+    <div class="ob-eyebrow">Customer Clarity Framework</div>
+    <h1 class="ob-title">One conversation.<br><em>Your entire marketing story.</em></h1>
+    <p class="ob-sub">Answer 15 questions in a natural back-and-forth with an AI coach. It will push for specifics, store your answers, and generate a complete marketing user story at the end.</p>
+    <div class="ob-how">
+      <div class="ob-step"><span class="ob-step-n">1</span>The AI asks you a question. You reply naturally, no minimum length, no formatting required.</div>
+      <div class="ob-step"><span class="ob-step-n">2</span>If your answer needs more depth, the AI will ask a follow up. If it is strong, it confirms and moves on.</div>
+      <div class="ob-step"><span class="ob-step-n">3</span>Each locked answer appears in the sidebar. At the end you get your full marketing user story.</div>
+    </div>
+    <button class="btn-start" onclick="startSession()">Connect AI and Start</button>
+    <p class="ob-note">Bring your own API key from Claude, GPT-4, or Gemini. Your key stays in your browser and is never stored on any server.</p>
+  </div>
+</div>
+
+<script>
+// ================================
+// QUESTIONS
+// ================================
+const QS = [
+  {n:1, section:'Problem', title:'What are the main problems your business solves?', hint:'List every problem and symptom you can think of. Think about what keeps your ideal customer up at night, the specific visceral reality of it, not just the category.'},
+  {n:2, section:'Problem', title:'Have you ever personally experienced this problem?', hint:'Write about how these feelings have shown up in your own life. Use visceral language. The more personal this is, the more authentic your messaging becomes.'},
+  {n:3, section:'Problem', title:'How does this problem normally affect your customers?', hint:'Go beyond business impact. How does it affect them at home, with family, their self-image? Map the ripple effects, not just the surface symptoms.'},
+  {n:4, section:'Problem', title:'Where do your customers encounter the problem?', hint:'Describe the specific physical and emotional context. What time of day, what they are doing, what just happened that made the problem surface.'},
+  {n:5, section:'Problem', title:'Are there other symptoms this problem creates?', hint:'Think downstream. Map the chain reaction into their relationships, decisions, and daily life. What else breaks down because of this problem?'},
+  {n:6, section:'Problem', title:'How much does this problem cost them in a year?', hint:'Consider lost revenue, wasted time, missed opportunities. Be specific. Give ranges. Show the math.'},
+  {n:7, section:'Problem', title:'What other solutions have they already tried?', hint:'List everything they have tried, formal competitors, DIY approaches, doing nothing, and exactly why each one failed them.'},
+  {n:8, section:'Solution', title:'Is your solution a product, a service, or both?', hint:'Describe what a client actually experiences from day one. Be concrete about the form and structure of what you offer.'},
+  {n:9, section:'Solution', title:'Did your solution change over time, and how?', hint:'What did you cut? What did you add? How did understanding the problem more deeply change what you offer?'},
+  {n:10, section:'Solution', title:'Is your solution permanent or does it require upkeep?', hint:'Be honest about one-time fix versus ongoing maintenance. Honesty here builds trust before the sale.'},
+  {n:11, section:'Solution', title:'Did you personally try other solutions before creating yours?', hint:'Name specific alternatives you tried. What worked, what did not, and what gap none of them filled that yours does.'},
+  {n:12, section:'Solution', title:'How do your best customers first react to your solution?', hint:'Think about your happiest clients. Relief? Surprise? The I should have known this moment? Describe it.'},
+  {n:13, section:'Solution', title:'How quickly do they fully adopt your solution?', hint:'Be honest about the adoption timeline. What does week one look like? When does it become second nature?'},
+  {n:14, section:'Solution', title:'How long before your solution pays for itself?', hint:'Calculate how long to recoup the investment. Include direct returns and time saved. Best case and typical case.'},
+  {n:15, section:'Solution', title:'What does your ideal customer look like after the transformation?', hint:'Not just business results but who they have become. How do they describe themselves now versus before? What is different about Monday morning?'}
+];
+
+// ================================
+// STATE
+// ================================
+let S = {
+  provider: 'anthropic',
+  apiKey: '',
+  user: null,
+  paid: false,
+  started: false,
+  curQ: 0,           // 0-indexed current question
+  answers: [],       // locked answers [{q, answer, score}]
+  convo: [],         // full message history for display
+  busy: false,
+  turnCount: 0,      // turns on current question
+  tempAnswer: ''     // best answer attempt for current q
+};
+
+// ================================
+// PROFILE STORAGE (persists forever)
+// ================================
+const PROFILE_KEY = 'cc4_profile';
+
+function saveProfile() {
+  try {
+    localStorage.setItem(PROFILE_KEY, JSON.stringify({
+      apiKey: S.apiKey,
+      provider: S.provider,
+      user: S.user,
+      paid: S.paid
+    }));
+  } catch(e) {}
+}
+
+function loadProfile() {
+  try {
+    const raw = localStorage.getItem(PROFILE_KEY);
+    if (!raw) return;
+    const p = JSON.parse(raw);
+    if (p.apiKey) S.apiKey = p.apiKey;
+    if (p.provider) S.provider = p.provider;
+    if (p.user) S.user = p.user;
+    if (p.paid) S.paid = p.paid;
+  } catch(e) {}
+}
+
+// SESSION STORAGE (this clarity session)
+function sv() {
+  try {
+    localStorage.setItem('cc4', JSON.stringify({
+      provider:S.provider, user:S.user, paid:S.paid, started:S.started,
+      curQ:S.curQ, answers:S.answers, convo:S.convo, turnCount:S.turnCount, tempAnswer:S.tempAnswer
+    }));
+  } catch(e) {}
+}
+
+function ld() {
+  // load profile first (api key, provider, user)
+  loadProfile();
+  // then overlay session state
+  try {
+    const d = localStorage.getItem('cc4');
+    if (d) {
+      const parsed = JSON.parse(d);
+      // session data wins for session fields, but profile wins for key/provider
+      const key = S.apiKey;
+      const prov = S.provider;
+      Object.assign(S, parsed);
+      // restore profile values if session doesn't have them
+      if (!S.apiKey && key) S.apiKey = key;
+      if (prov && !parsed.provider) S.provider = prov;
+    }
+  } catch(e) {}
+}
+function wc(t) { return t.trim().split(/\s+/).filter(w => w.length > 0).length; }
+
+// ================================
+// INIT
+// ================================
+window.onload = () => {
+  ld();
+  if (S.apiKey) markConnected();
+  if (S.started) {
+    showApp();
+    restoreConvo();
+    updateProgress();
+    updateSidebar();
+    if (S.curQ < 15) focusInput();
+  }
+};
+
+// ================================
+// API MODAL
+// ================================
+function openModal() {
+  // pre-populate with saved values
+  const keyInput = document.getElementById('keyIn');
+  if (S.apiKey) keyInput.value = S.apiKey;
+  // restore provider tab state
+  document.querySelectorAll('.ptab').forEach(t => {
+    t.classList.toggle('on', t.dataset.provider === S.provider);
+  });
+  updateKeyNote(S.provider);
+  // show profile badge if key already saved
+  const badge = document.getElementById('profileBadge');
+  const badgeTxt = document.getElementById('profileBadgeTxt');
+  if (S.apiKey) {
+    const labels = { anthropic:'Claude 4.6', openai:'GPT-4o', gemini:'Gemini' };
+    const masked = S.apiKey.substring(0,6) + '...' + S.apiKey.slice(-4);
+    badgeTxt.textContent = `${labels[S.provider]||S.provider} key saved: ${masked}`;
+    badge.style.display = 'block';
+  } else {
+    badge.style.display = 'none';
+  }
+  document.getElementById('apiModal').classList.remove('hidden');
+}
+
+function clearProfile() {
+  if (!confirm('Remove your saved API key? You will need to re-enter it.')) return;
+  S.apiKey = '';
+  S.provider = 'anthropic';
+  localStorage.removeItem(PROFILE_KEY);
+  sv();
+  document.getElementById('keyIn').value = '';
+  document.getElementById('profileBadge').style.display = 'none';
+  const btn = document.getElementById('navAiBtn');
+  btn.textContent = 'Connect AI';
+  btn.classList.remove('on');
+  btn.onclick = openModal;
+}
+function closeModal() { document.getElementById('apiModal').classList.add('hidden'); }
+
+function setProvider(p, btn) {
+  S.provider = p;
+  document.querySelectorAll('.ptab').forEach(t => t.classList.remove('on'));
+  btn.classList.add('on');
+  updateKeyNote(p);
+}
+function updateKeyNote(p) {
+  const notes = {
+    anthropic: 'Get your Claude key at <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a>',
+    openai: 'Get your key at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>',
+    gemini: 'Get your key at <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com</a>'
+  };
+  document.getElementById('keyNote').innerHTML = notes[p] || '';
+}
+
+function saveKey() {
+  const k = document.getElementById('keyIn').value.trim();
+  if (!k) { alert('Please paste your API key'); return; }
+  S.apiKey = k;
+  // save to permanent profile
+  saveProfile();
+  sv();
+  closeModal();
+  markConnected();
+  if (!S.started) startSession();
+  else {
+    // if waiting at paywall, continue
+    const pw = document.getElementById('paywallMsg');
+    if (pw) {
+      pw.remove();
+      S.convo = S.convo.filter(m => m.role !== 'paywall');
+      sv();
+      askQuestion(S.curQ);
+    }
+  }
+}
+
+function markConnected() {
+  const labels = { anthropic: 'Claude 4.6', openai: 'GPT-4o', gemini: 'Gemini 2.0' };
+  const label = labels[S.provider] || 'AI';
+  const btn = document.getElementById('navAiBtn');
+  btn.textContent = label + ' Connected';
+  btn.classList.add('on');
+  btn.onclick = openModal;
+  const sbPlan = document.getElementById('sbPlan');
+  if (sbPlan) sbPlan.textContent = 'Powered by ' + label;
+}
+
+// ================================
+// SESSION START
+// ================================
+function startSession() {
+  if (!S.apiKey) { openModal(); return; }
+  S.started = true;
+  showApp();
+  sv();
+  setTimeout(() => askQuestion(0), 400);
+}
+
+function showApp() {
+  document.getElementById('onboardScreen').style.display = 'none';
+  document.getElementById('appShell').style.display = 'grid';
+  if (S.user) updateNavUser();
+}
+
+function updateNavUser() {
+  if (!S.user) return;
+  document.getElementById('sbAv').textContent = S.user.first[0].toUpperCase();
+  document.getElementById('sbName').textContent = S.user.first + ' ' + S.user.last;
+  const pill = document.getElementById('navPill');
+  pill.textContent = S.user.first;
+  pill.classList.add('show');
+}
+
+// ================================
+// RESTORE CONVO ON RELOAD
+// ================================
+function restoreConvo() {
+  const msgs = document.getElementById('messages');
+  msgs.innerHTML = '';
+  S.convo.forEach(m => {
+    if (m.role === 'ai') appendAI(m.text, m.style || '', false);
+    else if (m.role === 'user') appendUser(m.text, false);
+    else if (m.role === 'system') appendSystem(m.text, false);
+    else if (m.role === 'paywall') appendPaywall(false);
+  });
+  // if we are mid-question, show current question again if not already shown
+  msgs.scrollTop = msgs.scrollHeight;
+  // if waiting at paywall
+  if (S.curQ >= 3 && !S.paid && !S.apiKey) {
+    lockInput();
+  }
+}
+
+// ================================
+// RENDER MESSAGES
+// ================================
+function appendAI(text, style = '', scroll = true) {
+  const msgs = document.getElementById('messages');
+  const wrap = document.createElement('div');
+  wrap.className = 'msg-ai-wrap';
+  const cls = style ? ` ${style}` : '';
+  wrap.innerHTML = `<div class="ai-av">🤖</div><div class="ai-msg${cls}">${text}</div>`;
+  msgs.appendChild(wrap);
+  if (scroll) msgs.scrollTop = msgs.scrollHeight;
+  return wrap;
+}
+
+function appendUser(text, scroll = true) {
+  const msgs = document.getElementById('messages');
+  const wrap = document.createElement('div');
+  wrap.className = 'msg-user-wrap';
+  wrap.innerHTML = `<div class="user-msg">${escHtml(text)}</div>`;
+  msgs.appendChild(wrap);
+  if (scroll) msgs.scrollTop = msgs.scrollHeight;
+}
+
+function appendSystem(text, scroll = true) {
+  const msgs = document.getElementById('messages');
+  const wrap = document.createElement('div');
+  wrap.className = 'msg-system';
+  wrap.innerHTML = `<span class="system-chip">✓ ${text}</span>`;
+  msgs.appendChild(wrap);
+  if (scroll) msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showThinking() {
+  const msgs = document.getElementById('messages');
+  const wrap = document.createElement('div');
+  wrap.className = 'think-wrap'; wrap.id = 'thinkEl';
+  wrap.innerHTML = `<div class="ai-av">🤖</div><div class="think-bubble"><div class="think-dots"><div class="td"></div><div class="td"></div><div class="td"></div></div></div>`;
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+function removeThinking() { const e = document.getElementById('thinkEl'); if (e) e.remove(); }
+
+function escHtml(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ================================
+// ASK QUESTION
+// ================================
+function askQuestion(qi) {
+  S.curQ = qi;
+  S.turnCount = 0;
+  S.tempAnswer = '';
+  sv();
+  updateProgress();
+
+  if (qi >= 15) { generateStory(); return; }
+
+  // Paywall after Q3 if not paid and no API key
+  if (qi >= 3 && !S.paid && !S.apiKey) {
+    showPaywallMessage();
+    return;
+  }
+
+  const q = QS[qi];
+  updateChatTop(q);
+
+  // Build the question message
+  const isFirst = qi === 0;
+  let html = '';
+  if (isFirst) {
+    html = `<div class="ai-q-label">Let's get started</div><div class="ai-q-title">${q.title}</div><div class="ai-q-hint">${q.hint}</div>`;
+  } else {
+    html = `<div class="ai-q-label">${q.section} Section, Question ${q.n} of 15</div><div class="ai-q-title">${q.title}</div><div class="ai-q-hint">${q.hint}</div>`;
+  }
+
+  // small delay so it feels like typing
+  setTimeout(() => {
+    appendAI(html, 'question');
+    S.convo.push({ role: 'ai', text: html, style: 'question' });
+    sv();
+    unlockInput();
+    focusInput();
+  }, isFirst ? 600 : 300);
+}
+
+function updateChatTop(q) {
+  document.getElementById('chatTopTitle').textContent = `Question ${q.n} of 15`;
+  document.getElementById('chatTopSub').textContent = q.title;
+}
+
+// ================================
+// INPUT HANDLING
+// ================================
+function onInput() {
+  const ta = document.getElementById('chatTa');
+  ta.style.height = 'auto';
+  ta.style.height = Math.min(ta.scrollHeight, 180) + 'px';
+  const hasText = ta.value.trim().length > 0;
+  const btn = document.getElementById('sendBtn');
+  btn.classList.toggle('lit', hasText && !S.busy);
+}
+
+function onKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    if (!S.busy) send();
+  }
+}
+
+function lockInput() {
+  document.getElementById('chatTa').disabled = true;
+  document.getElementById('sendBtn').classList.remove('lit');
+}
+function unlockInput() {
+  const ta = document.getElementById('chatTa');
+  ta.disabled = false;
+}
+function focusInput() {
+  setTimeout(() => {
+    const ta = document.getElementById('chatTa');
+    if (ta && !ta.disabled) ta.focus();
+  }, 100);
+}
+function clearInput() {
+  const ta = document.getElementById('chatTa');
+  ta.value = '';
+  ta.style.height = 'auto';
+  document.getElementById('sendBtn').classList.remove('lit');
+}
+
+// ================================
+// SEND
+// ================================
+async function send() {
+  const ta = document.getElementById('chatTa');
+  const text = ta.value.trim();
+  if (!text || S.busy) return;
+
+  S.busy = true;
+  lockInput();
+  clearInput();
+
+  appendUser(text);
+  S.convo.push({ role: 'user', text });
+  S.tempAnswer = text;
+  sv();
+
+  showThinking();
+
+  const qi = S.curQ;
+  const q = QS[qi];
+
+  // Build context from locked answers
+  const prevContext = S.answers.map(a =>
+    `Q${a.qn} (${a.title}): ${a.answer}`
+  ).join('\n');
+
+  const sys = `You are a sharp, warm marketing strategist having a real coaching conversation. You are helping an entrepreneur build a complete customer clarity framework through 15 questions. This is question ${q.n} of 15.
+
+Current question: "${q.title}"
+What a strong answer looks like: ${q.hint}
+
+Context from their previous answers:
+${prevContext || 'This is the first question in the session.'}
+
+How to respond:
+Speak like a real person, not a bot. Short, direct, conversational. 2 to 3 sentences maximum.
+
+If their answer is specific with real examples, real numbers, or real moments that would produce usable marketing copy: confirm it naturally. Reflect one thing back that stood out. Tell them you are locking it in and moving forward. Set status to confirmed.
+
+If their answer is vague, too short, or generic: do not lecture. Ask ONE specific follow-up question that pulls out what is missing. Make it feel like genuine curiosity. Set status to pushing.
+
+If they are completely off topic: redirect warmly in one sentence. Set status to offtopic.
+
+Never use bullet points. Never explain the framework. Just coach.
+
+Respond ONLY with valid JSON, no markdown:
+{"response":"your reply","status":"confirmed or pushing or offtopic","score":1 to 5}`;
+
+  const result = await callAI(sys, text);
+  removeThinking();
+
+  const style = result.status === 'confirmed' ? 'confirmed' : (result.status === 'offtopic' ? 'pushing' : 'pushing');
+  appendAI(result.response, style);
+  S.convo.push({ role: 'ai', text: result.response, style });
+  S.turnCount++;
+
+  if (result.status === 'confirmed') {
+    // Lock the answer
+    S.answers.push({
+      qn: q.n,
+      title: q.title,
+      answer: text,
+      score: result.score || 4
+    });
+    S.convo.push({ role: 'system', text: `Answer ${q.n} locked` });
+    appendSystem(`Answer ${q.n} locked`);
+    updateSidebar();
+    updateProgress();
+    sv();
+    // Move to next question after a beat
+    setTimeout(() => askQuestion(qi + 1), 800);
+  } else {
+    S.busy = false;
+    unlockInput();
+    focusInput();
+    sv();
+  }
+}
+
+// ================================
+// PAYWALL
+// ================================
+function appendPaywall(scroll = true) {
+  const msgs = document.getElementById('messages');
+  const wrap = document.createElement('div');
+  wrap.className = 'paywall-msg';
+  wrap.id = 'paywallMsg';
+  wrap.innerHTML = `
+    <div class="pw-inner">
+      <div class="pw-icon">🎯</div>
+      <h2 class="pw-title">Great foundation.<br><em>Keep going.</em></h2>
+      <p class="pw-sub">Your first 3 answers are locked in. Connect your AI key or unlock the full session to continue through all 15 questions and get your complete Marketing User Story.</p>
+      <div class="pw-price">$47</div>
+      <p class="pw-price-note">one time, includes all 15 questions and your marketing user story export</p>
+      <div class="pw-feats">
+        <div class="pw-feat"><div class="pw-feat-dot">✓</div>Questions 4 through 15 with conversational AI coaching</div>
+        <div class="pw-feat"><div class="pw-feat-dot">✓</div>Complete Marketing User Story with messaging architecture and ad copy</div>
+        <div class="pw-feat"><div class="pw-feat-dot">✓</div>All answers saved in collapsible sidebar for reference</div>
+        <div class="pw-feat"><div class="pw-feat-dot">✓</div>Exportable story ready to use in ads and content immediately</div>
+      </div>
+      <div class="reg-form">
+        <div class="rf-row">
+          <div><label class="rf-label">First Name</label><input type="text" class="rf-input" id="rfFirst" placeholder="Christine"></div>
+          <div><label class="rf-label">Last Name</label><input type="text" class="rf-input" id="rfLast" placeholder="Walker"></div>
+        </div>
+        <label class="rf-label">Email</label>
+        <input type="email" class="rf-input" id="rfEmail" placeholder="you@yourbusiness.com">
+        <label class="rf-label">Business Type</label>
+        <select class="rf-input" id="rfBiz" style="appearance:none;cursor:pointer">
+          <option value="">Select your business type...</option>
+          <option value="influencer">Influencer or Content Creator</option>
+          <option value="service">Service-Based Business</option>
+          <option value="coach">Coach or Consultant</option>
+          <option value="agency">Agency or Freelancer</option>
+          <option value="other">Other</option>
+        </select>
+        <div class="stripe-mock">
+          <div class="stripe-mock-lbl">Secured by Stripe</div>
+          <div class="stripe-mock-row">
+            <div class="stripe-mock-f" style="flex:2">4242 4242 4242 4242</div>
+            <div class="stripe-mock-f">12/27</div>
+            <div class="stripe-mock-f">123</div>
+          </div>
+          <div class="stripe-mock-note">Replace with your GHL Stripe embed or payment link to activate real payments.</div>
+        </div>
+        <button class="btn-pay" onclick="processPayment()">🔒 Pay $47 and Continue</button>
+        <p class="secure-note">🔒 Secured by Stripe. 7-day refund policy.</p>
+      </div>
+      <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:16px;">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:10px;text-align:center">Or connect your own API key to continue</p>
+        <button onclick="openModal()" style="width:100%;padding:11px;background:transparent;border:1.5px solid var(--border);border-radius:5px;font-size:13px;font-weight:700;cursor:pointer;color:var(--charcoal-soft);">Connect API Key and Continue Free</button>
+      </div>
+    </div>`;
+  msgs.appendChild(wrap);
+  if (scroll) msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showPaywallMessage() {
+  appendPaywall();
+  S.convo.push({ role: 'paywall' });
+  sv();
+  lockInput();
+}
+
+function processPayment() {
+  const f = document.getElementById('rfFirst')?.value.trim();
+  const l = document.getElementById('rfLast')?.value.trim();
+  const e = document.getElementById('rfEmail')?.value.trim();
+  const b = document.getElementById('rfBiz')?.value;
+  if (!f || !l || !e || !b) { alert('Please fill in all fields'); return; }
+  if (!e.includes('@')) { alert('Please enter a valid email'); return; }
+  S.user = { first: f, last: l, email: e, biz: b };
+  S.paid = true;
+  saveProfile(); // persist user and paid status to profile
+  sv();
+  updateNavUser();
+  // Remove paywall and continue
+  document.getElementById('paywallMsg')?.remove();
+  S.convo = S.convo.filter(m => m.role !== 'paywall');
+  sv();
+  askQuestion(S.curQ);
+}
+
+// ================================
+// SIDEBAR
+// ================================
+function updateSidebar() {
+  const list = document.getElementById('answersList');
+  if (S.answers.length === 0) {
+    list.innerHTML = '<p style="font-size:12px;color:rgba(255,255,255,.2);font-style:italic">Your answers will appear here as the conversation progresses.</p>';
+    return;
+  }
+  list.innerHTML = '';
+  S.answers.forEach(a => {
+    const item = document.createElement('div');
+    item.className = 'ans-item';
+    item.innerHTML = `
+      <button class="ans-toggle" onclick="this.closest('.ans-item').classList.toggle('open')">
+        <div class="ans-qnum">Q${a.qn}</div>
+        <div class="ans-qtitle">${a.title}</div>
+        <div class="ans-score">${a.score}/5</div>
+        <div class="ans-arrow">▼</div>
+      </button>
+      <div class="ans-body">${a.answer.substring(0, 300)}${a.answer.length > 300 ? '...' : ''}</div>`;
+    list.appendChild(item);
+  });
+}
+
+function updateProgress() {
+  const done = S.answers.length;
+  const pct = (done / 15) * 100;
+  document.getElementById('sbProgFill').style.width = pct + '%';
+  document.getElementById('sbProgTxt').textContent = `${done} of 15 questions answered`;
+  document.getElementById('qPillFill').style.width = pct + '%';
+  document.getElementById('qPillTxt').textContent = `${done} / 15`;
+}
+
+// ================================
+// AI CALL
+// ================================
+async function callAI(system, userMsg) {
+  if (!S.apiKey) {
+    openModal();
+    return {
+      response: 'You need to connect an AI key to continue. Click Connect AI in the top right.',
+      status: 'pushing',
+      score: 0
+    };
+  }
+
+  try {
+    let text;
+    if (S.provider === 'anthropic') {
+      const r = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-api-key': S.apiKey, 'anthropic-version': '2023-06-01' },
+        body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 600, system, messages: [{ role: 'user', content: userMsg }] })
+      });
+      const d = await r.json();
+      if (d.error) throw new Error(d.error.message);
+      text = d.content[0].text;
+    } else if (S.provider === 'openai') {
+      const r = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + S.apiKey },
+        body: JSON.stringify({ model: 'gpt-4o', max_tokens: 600, messages: [{ role: 'system', content: system }, { role: 'user', content: userMsg }] })
+      });
+      const d = await r.json();
+      text = d.choices[0].message.content;
+    } else {
+      const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + S.apiKey, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: system + '\n\nUser message: ' + userMsg }] }] })
+      });
+      const d = await r.json();
+      text = d.candidates[0].content.parts[0].text;
+    }
+    const clean = text.replace(/```json|```/g, '').trim();
+    return JSON.parse(clean);
+  } catch (e) {
+    return {
+      response: 'Something went wrong connecting to the AI. Please check your API key and try again.',
+      status: 'pushing',
+      score: 0
+    };
+  }
+}
+
+// ================================
+// STORY GENERATION
+// ================================
+async function generateStory() {
+  lockInput();
+  document.getElementById('inputArea').style.display = 'none';
+  document.getElementById('chatTopTitle').textContent = 'Your Marketing User Story';
+  document.getElementById('chatTopSub').textContent = 'Generated from all 15 answers';
+  document.getElementById('qPillFill').style.width = '100%';
+  document.getElementById('qPillTxt').textContent = '15 / 15';
+
+  appendAI('You have answered all 15 questions. Give me a moment to synthesize everything into your complete Marketing User Story.', 'confirmed');
+
+  showThinking();
+
+  const allAnswers = S.answers.map(a => `Q${a.qn}: ${a.title}\nAnswer: ${a.answer}`).join('\n\n');
+
+  const prompt = `You are a world-class direct response copywriter. Synthesize these 15 customer clarity answers into a complete Marketing User Story.
+
+Write in clear direct prose throughout. No bullet points anywhere. No section headers with colons. No generic language. Every sentence should be specific and visceral, grounded in exactly what this person shared.
+
+Sections to include:
+
+CUSTOMER AVATAR
+Who they are in vivid specific terms. Age range, situation, income context, mindset, what their daily life actually looks like. Make it feel like a real person not a demographic.
+
+THE CORE PAIN
+The single most important problem. What it feels like from the inside at its most acute moment. Not what it is, what it feels like to live it.
+
+THE RIPPLE EFFECTS
+What else breaks down in their life because of this problem. Relationships, identity, work performance, daily texture. The downstream damage that never gets talked about.
+
+FAILED ALTERNATIVES
+What they tried and exactly why each one failed. Be specific about the alternatives and the specific gap each one left.
+
+THE MOMENT BEFORE
+The specific physical scene when the pain is most acute. Time of day, location, what they are doing, what just happened, what is running through their head. Make it a scene.
+
+YOUR SOLUTION
+What this person offers and how it is genuinely different from everything else. What the client experiences from day one. Why it works when other things did not.
+
+THE TRANSFORMATION
+What life looks like after the solution works. Not just results but who they have become. How they describe themselves now versus before. What Monday morning feels like.
+
+MESSAGING ARCHITECTURE
+Three distinct headline angles that would stop this specific customer mid-scroll. Three scroll-stopping opening hooks for social content. One positioning statement that fits in a single sentence and would make the right person feel immediately seen.
+
+AD COPY FOUNDATION
+A complete problem-agitate-solve script for a 60-second video ad. Written in the voice of someone who has lived this problem and found the solution. Ready to film.
+
+Here are the 15 answers:
+
+${allAnswers}`;
+
+  let storyText = '';
+
+  if (!S.apiKey) {
+    storyText = 'No API key connected. Please connect your AI key and try again.';
+  } else {
+    try {
+      let text;
+      if (S.provider === 'anthropic') {
+        const r = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-api-key': S.apiKey, 'anthropic-version': '2023-06-01' },
+          body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 8000, messages: [{ role: 'user', content: prompt }] })
+        });
+        const d = await r.json(); text = d.content[0].text;
+      } else if (S.provider === 'openai') {
+        const r = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + S.apiKey },
+          body: JSON.stringify({ model: 'gpt-4o', max_tokens: 4000, messages: [{ role: 'user', content: prompt }] })
+        });
+        const d = await r.json(); text = d.choices[0].message.content;
+      } else {
+        const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + S.apiKey, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+        });
+        const d = await r.json(); text = d.candidates[0].content.parts[0].text;
+      }
+      storyText = text;
+    } catch(e) {
+      storyText = 'Error generating your story. Please check your API key and try again.';
+    }
+  }
+
+  removeThinking();
+
+  const msgs = document.getElementById('messages');
+  const card = document.createElement('div');
+  card.className = 'story-card';
+  card.style.maxWidth = '100%';
+  card.innerHTML = `
+    <h3>Your Marketing User Story</h3>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:24px">Generated from your 15 answers. Use this as the foundation for every ad, email, and piece of content you create.</p>
+    <div style="white-space:pre-wrap;font-size:15px;line-height:1.9;color:var(--charcoal-soft)">${storyText}</div>
+    <div style="margin-top:32px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn-start" style="width:auto;padding:12px 24px;font-size:13px" onclick="exportStory(${JSON.stringify(encodeURIComponent(storyText))})">Export as Text</button>
+      <button class="btn-start" style="width:auto;padding:12px 24px;font-size:13px;background:var(--charcoal)" onclick="window.print()">Print</button>
+      <button class="btn-start" style="width:auto;padding:12px 24px;font-size:13px;background:transparent;color:var(--charcoal-soft);border:1.5px solid var(--border)" onclick="newSession()">New Session</button>
+    </div>`;
+  msgs.appendChild(card);
+  msgs.scrollTop = msgs.scrollHeight;
+  S.busy = false;
+}
+
+function exportStory(enc) {
+  const t = decodeURIComponent(enc);
+  const b = new Blob([t], { type: 'text/plain' });
+  const u = URL.createObjectURL(b);
+  const a = document.createElement('a');
+  a.href = u; a.download = 'marketing-user-story.txt';
+  a.click(); URL.revokeObjectURL(u);
+}
+
+function newSession() {
+  if (!confirm('Start a new session? Your account stays active.')) return;
+  localStorage.removeItem('cc4');
+  location.reload();
+}
+</script>
+</body>
+</html>
