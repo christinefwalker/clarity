@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Christine Walker, Customer Clarity and Business Fundamentals</title>
+<meta name="description" content="You cannot sell what you cannot target. A business education platform teaching influencers and founders the fundamentals of customer clarity before ads.">
+<meta property="og:title" content="Christine Walker, Customer Clarity">
+<meta property="og:description" content="90 percent of what grabs people is their pain. Learn to find it, name it, and build everything else on top of it.">
+<meta name="theme-color" content="#3D8B7A">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sand: #F5F0E8;
+  --sand-dark: #EDE6D8;
+  --sand-deep: #E2D9C8;
+  --teal: #3D8B7A;
+  --teal-dark: #2E6B5E;
+  --teal-light: #6AADA0;
+  --teal-faint: rgba(61,139,122,0.07);
+  --clay: #BF6B3F;
+  --clay-light: #D4845A;
+  --honey: #C8953A;
+  --honey-faint: rgba(200,149,58,0.08);
+  --charcoal: #2A2420;
+  --charcoal-soft: #4A3F38;
+  --muted: #9E9089;
+  --border: #DDD5C8;
+  --white: #FDFAF6;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--sand);
+  color: var(--charcoal);
+  overflow-x: hidden;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.04); opacity: 1; }
+}
+@keyframes drift {
+  0%, 100% { transform: translate(0,0) rotate(0deg); }
+  33% { transform: translate(12px,-8px) rotate(1deg); }
+  66% { transform: translate(-8px,10px) rotate(-1deg); }
+}
+
+.animate-up { animation: fadeUp 0.7s ease both; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(245,240,232,0.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 48px;
+  height: 68px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; font-weight: 700;
+  color: var(--charcoal); text-decoration: none;
+  letter-spacing: -0.2px;
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-logo-dot {
+  width: 8px; height: 8px;
+  background: var(--teal); border-radius: 50%;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+.nav-links {
+  display: flex; gap: 36px; align-items: center;
+}
+.nav-links a {
+  font-size: 13px; font-weight: 500; letter-spacing: 0.4px;
+  color: var(--charcoal-soft); text-decoration: none;
+  transition: color 0.2s;
+  text-transform: uppercase;
+}
+.nav-links a:hover { color: var(--teal); }
+.nav-cta {
+  background: var(--charcoal) !important;
+  color: var(--white) !important;
+  padding: 11px 24px; border-radius: 3px;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: var(--teal) !important; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  padding: 140px 48px 100px;
+  display: flex; align-items: center;
+  position: relative; overflow: hidden;
+}
+.hero-bg-orb {
+  position: absolute; border-radius: 50%;
+  pointer-events: none; animation: drift 12s ease-in-out infinite;
+}
+.hero-bg-orb-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(61,139,122,0.09) 0%, transparent 65%);
+  top: -100px; right: -100px;
+}
+.hero-bg-orb-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(191,107,63,0.07) 0%, transparent 65%);
+  bottom: 0; left: 10%;
+  animation-delay: -5s;
+}
+.hero-inner {
+  max-width: 1140px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1.1fr 0.9fr;
+  gap: 80px; align-items: center;
+  position: relative; z-index: 1;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--teal);
+  margin-bottom: 24px;
+  padding: 7px 14px;
+  background: rgba(61,139,122,0.1);
+  border-radius: 20px;
+  border: 1px solid rgba(61,139,122,0.2);
+}
+.hero-tag-dot {
+  width: 5px; height: 5px;
+  background: var(--teal); border-radius: 50%;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(44px, 5.5vw, 68px);
+  line-height: 1.06; font-weight: 700;
+  color: var(--charcoal);
+  margin-bottom: 28px;
+  letter-spacing: -1px;
+}
+.hero-title em {
+  font-style: italic; color: var(--teal);
+}
+.hero-title .line-indent {
+  display: block; padding-left: 40px;
+}
+.hero-sub {
+  font-size: 18px; line-height: 1.75;
+  color: var(--charcoal-soft);
+  margin-bottom: 44px;
+  font-weight: 300;
+  max-width: 480px;
+}
+.hero-sub strong { font-weight: 600; color: var(--charcoal); }
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.btn-primary {
+  background: var(--teal); color: var(--white);
+  padding: 17px 34px; border-radius: 3px;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.4px;
+  text-decoration: none; border: none; cursor: pointer;
+  transition: all 0.2s; display: inline-block;
+}
+.btn-primary:hover {
+  background: var(--teal-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(61,139,122,0.25);
+}
+.btn-ghost {
+  background: transparent; color: var(--charcoal-soft);
+  padding: 17px 28px; border-radius: 3px;
+  font-size: 14px; font-weight: 500;
+  text-decoration: none;
+  border: 1.5px solid var(--border);
+  cursor: pointer; transition: all 0.2s; display: inline-block;
+}
+.btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+.hero-proof {
+  display: flex; align-items: center; gap: 12px;
+  margin-top: 36px; font-size: 13px; color: var(--muted);
+}
+.hero-proof-dots { display: flex; gap: 4px; }
+.hero-proof-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 2px solid var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+  margin-left: -8px;
+}
+.hero-proof-dot:first-child { margin-left: 0; }
+.pd1 { background: var(--teal); color: var(--white); }
+.pd2 { background: var(--clay); color: var(--white); }
+.pd3 { background: var(--honey); color: var(--white); }
+.pd4 { background: var(--charcoal); color: var(--white); }
+
+/* HERO VISUAL */
+.hero-visual { position: relative; }
+.hero-card-main {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 36px;
+  box-shadow: 0 24px 64px rgba(42,36,32,0.09);
+  position: relative; z-index: 2;
+}
+.hero-card-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--teal);
+  margin-bottom: 18px;
+}
+.hero-card-q {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 700;
+  color: var(--charcoal); margin-bottom: 14px;
+  line-height: 1.35;
+}
+.hero-card-answer {
+  font-size: 13px; line-height: 1.7;
+  color: var(--charcoal-soft);
+  padding: 14px 16px;
+  background: var(--sand);
+  border-radius: 6px;
+  border-left: 3px solid var(--teal);
+  margin-bottom: 18px;
+}
+.hero-card-status {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600;
+  color: var(--teal);
+}
+.status-dot {
+  width: 8px; height: 8px;
+  background: var(--teal); border-radius: 50%;
+  animation: pulse 1.8s ease-in-out infinite;
+}
+.hero-card-float {
+  position: absolute;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  box-shadow: 0 8px 24px rgba(42,36,32,0.08);
+  font-size: 13px;
+  z-index: 3;
+}
+.float-top {
+  top: -28px; right: -24px;
+  display: flex; align-items: center; gap: 10px;
+}
+.float-bottom {
+  bottom: -24px; left: -24px;
+}
+.float-icon {
+  width: 32px; height: 32px;
+  background: var(--teal-faint);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.float-text strong {
+  display: block; font-size: 13px; font-weight: 700;
+  color: var(--charcoal);
+}
+.float-text span {
+  font-size: 11px; color: var(--muted);
+}
+.float-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 700; color: var(--teal);
+}
+.float-num-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* DIVIDER */
+.section-divider {
+  height: 1px; background: var(--border);
+  max-width: 1140px; margin: 0 auto;
+}
+
+/* MANIFESTO BAND */
+.manifesto {
+  background: var(--charcoal);
+  padding: 64px 48px;
+  overflow: hidden;
+}
+.manifesto-inner {
+  max-width: 1140px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 2fr;
+  gap: 64px; align-items: center;
+}
+.manifesto-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--teal-light);
+  margin-bottom: 12px;
+}
+.manifesto-eyebrow {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px; font-weight: 700; font-style: italic;
+  color: var(--white); line-height: 1.2;
+}
+.manifesto-text {
+  font-size: 17px; line-height: 1.85;
+  color: rgba(255,255,255,0.65);
+  font-weight: 300;
+}
+.manifesto-text strong {
+  color: rgba(255,255,255,0.9); font-weight: 600;
+}
+
+/* PROBLEM SECTION */
+.problem-section { padding: 100px 48px; background: var(--white); }
+.section-inner { max-width: 1140px; margin: 0 auto; }
+.section-header { margin-bottom: 64px; }
+.section-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 14px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: 1.1; font-weight: 700;
+  color: var(--charcoal); margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+.section-title em { font-style: italic; color: var(--teal); }
+.section-sub {
+  font-size: 17px; line-height: 1.75;
+  color: var(--charcoal-soft);
+  max-width: 520px; font-weight: 300;
+}
+.problem-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 8px;
+  overflow: hidden;
+}
+.problem-item {
+  background: var(--white);
+  padding: 36px 32px;
+  transition: background 0.2s;
+}
+.problem-item:hover { background: var(--sand); }
+.problem-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 40px; font-weight: 700; line-height: 1;
+  color: var(--sand-deep); margin-bottom: 16px;
+}
+.problem-item h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; font-weight: 700;
+  color: var(--charcoal); margin-bottom: 10px;
+}
+.problem-item p {
+  font-size: 14px; line-height: 1.7;
+  color: var(--charcoal-soft);
+}
+
+/* WHO THIS IS FOR */
+.for-section { padding: 100px 48px; }
+.for-inner {
+  max-width: 1140px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: start;
+}
+.for-cards { display: flex; flex-direction: column; gap: 16px; }
+.for-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 28px 32px;
+  display: flex; gap: 20px; align-items: flex-start;
+  transition: all 0.2s; cursor: default;
+}
+.for-card:hover {
+  border-color: var(--teal);
+  box-shadow: 0 8px 28px rgba(61,139,122,0.08);
+  transform: translateX(4px);
+}
+.for-card-icon {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: var(--teal-faint);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+}
+.for-card-icon.clay-bg { background: rgba(191,107,63,0.08); }
+.for-card-icon.honey-bg { background: rgba(200,149,58,0.08); }
+.for-card h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; font-weight: 700;
+  color: var(--charcoal); margin-bottom: 6px;
+}
+.for-card p {
+  font-size: 14px; line-height: 1.65;
+  color: var(--charcoal-soft);
+}
+
+/* TOOLS SECTION */
+.tools-section { padding: 100px 48px; background: var(--charcoal); }
+.tools-label { color: var(--teal-light) !important; }
+.tools-title { color: var(--white) !important; }
+.tools-sub { color: rgba(255,255,255,0.55) !important; }
+.tools-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; margin-top: 60px;
+}
+.tool-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 10px; padding: 36px 30px;
+  transition: all 0.2s;
+  position: relative; overflow: hidden;
+}
+.tool-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: var(--teal);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.tool-card:hover { background: rgba(255,255,255,0.07); }
+.tool-card:hover::before { transform: scaleX(1); }
+.tool-card.featured {
+  border-color: rgba(61,139,122,0.4);
+  background: rgba(61,139,122,0.08);
+}
+.tool-card.featured::before { transform: scaleX(1); }
+.tool-badge {
+  display: inline-block;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px; border-radius: 20px;
+  margin-bottom: 20px;
+}
+.tool-badge.active {
+  background: rgba(61,139,122,0.2); color: var(--teal-light);
+}
+.tool-badge.coming {
+  background: rgba(200,149,58,0.15); color: var(--honey);
+}
+.tool-card h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 700;
+  color: var(--white); margin-bottom: 12px;
+}
+.tool-card p {
+  font-size: 14px; line-height: 1.7;
+  color: rgba(255,255,255,0.55); margin-bottom: 24px;
+}
+.tool-link {
+  font-size: 13px; font-weight: 600;
+  color: var(--teal-light); text-decoration: none;
+  display: flex; align-items: center; gap: 6px;
+  transition: gap 0.2s;
+}
+.tool-link:hover { gap: 10px; }
+
+/* HOW IT WORKS */
+.how-section { padding: 100px 48px; background: var(--white); }
+.how-steps {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0; margin-top: 64px;
+  position: relative;
+}
+.how-steps::before {
+  content: '';
+  position: absolute; top: 28px; left: 14%; right: 14%;
+  height: 1px; background: var(--border);
+  z-index: 0;
+}
+.how-step {
+  text-align: center; padding: 0 20px;
+  position: relative; z-index: 1;
+}
+.how-step-num {
+  width: 56px; height: 56px;
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 24px;
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 700;
+  color: var(--charcoal-soft);
+  transition: all 0.2s;
+}
+.how-step:hover .how-step-num {
+  border-color: var(--teal); color: var(--teal);
+  background: var(--teal-faint);
+}
+.how-step h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; font-weight: 700;
+  color: var(--charcoal); margin-bottom: 10px;
+}
+.how-step p {
+  font-size: 13px; line-height: 1.7;
+  color: var(--charcoal-soft);
+}
+
+/* INFLUENCER SECTION */
+.influencer-section { padding: 100px 48px; }
+.influencer-inner {
+  max-width: 1140px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+.influencer-visual {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 40px;
+  box-shadow: 0 16px 48px rgba(42,36,32,0.07);
+}
+.iv-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 28px; padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.iv-avatar {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-light));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.iv-name { font-size: 14px; font-weight: 700; color: var(--charcoal); }
+.iv-role { font-size: 12px; color: var(--muted); }
+.iv-question {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px; font-weight: 600;
+  color: var(--charcoal); margin-bottom: 12px;
+  font-style: italic;
+}
+.iv-answer {
+  font-size: 13px; line-height: 1.7;
+  color: var(--charcoal-soft);
+  background: var(--sand); border-radius: 6px;
+  padding: 14px 16px; margin-bottom: 16px;
+  border-left: 3px solid var(--teal);
+}
+.iv-feedback {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: rgba(61,139,122,0.06);
+  border: 1px solid rgba(61,139,122,0.2);
+  border-radius: 6px; padding: 14px;
+}
+.iv-feedback-icon { font-size: 14px; margin-top: 1px; }
+.iv-feedback-text {
+  font-size: 12px; line-height: 1.6;
+  color: var(--charcoal-soft);
+}
+.iv-feedback-text strong { color: var(--teal); font-weight: 700; }
+.iv-tools {
+  margin-top: 20px; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.iv-tool-tag {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+  padding: 5px 12px; border-radius: 20px;
+  background: var(--sand-dark); color: var(--charcoal-soft);
+}
+.iv-tool-tag.active { background: rgba(61,139,122,0.1); color: var(--teal); }
+
+/* ABOUT */
+.about-section { padding: 100px 48px; background: var(--white); }
+.about-inner {
+  max-width: 1140px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+.about-quote-wrap {
+  padding: 40px;
+  background: var(--sand);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  position: relative;
+}
+.about-quote-mark {
+  font-family: 'Playfair Display', serif;
+  font-size: 80px; line-height: 0.6;
+  color: var(--teal); opacity: 0.3;
+  margin-bottom: 16px; display: block;
+}
+.about-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; line-height: 1.55;
+  font-style: italic; color: var(--charcoal);
+  margin-bottom: 24px;
+}
+.about-attr {
+  font-size: 13px; font-weight: 600;
+  color: var(--teal); letter-spacing: 0.3px;
+}
+.about-text p {
+  font-size: 16px; line-height: 1.85;
+  color: var(--charcoal-soft); margin-bottom: 20px;
+  font-weight: 300;
+}
+.about-text p strong { font-weight: 600; color: var(--charcoal); }
+.cred-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; margin-top: 32px;
+}
+.cred-item {
+  padding: 14px 16px;
+  background: var(--sand);
+  border-radius: 6px; border: 1px solid var(--border);
+  font-size: 13px; line-height: 1.5;
+  color: var(--charcoal-soft);
+}
+.cred-item strong {
+  display: block; font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 4px;
+}
+
+/* CTA SECTION */
+.cta-section {
+  padding: 120px 48px;
+  background: linear-gradient(160deg, var(--teal-dark) 0%, var(--teal) 60%, #4FA090 100%);
+  text-align: center; position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute; top: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cta-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
+  text-transform: uppercase; color: rgba(255,255,255,0.6);
+  margin-bottom: 20px;
+}
+.cta-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 700; line-height: 1.1;
+  color: var(--white); margin-bottom: 24px;
+  letter-spacing: -0.5px;
+}
+.cta-title em { font-style: italic; opacity: 0.85; }
+.cta-sub {
+  font-size: 18px; line-height: 1.7;
+  color: rgba(255,255,255,0.7);
+  max-width: 520px; margin: 0 auto 48px;
+  font-weight: 300;
+}
+.btn-cta-white {
+  background: var(--white); color: var(--teal-dark);
+  padding: 20px 48px; border-radius: 3px;
+  font-size: 16px; font-weight: 700; letter-spacing: 0.3px;
+  text-decoration: none; display: inline-block;
+  transition: all 0.2s; border: none; cursor: pointer;
+}
+.btn-cta-white:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.2);
+}
+.cta-note {
+  margin-top: 20px; font-size: 13px;
+  color: rgba(255,255,255,0.5);
+}
+
+/* FOOTER */
+footer {
+  background: var(--charcoal);
+  padding: 48px;
+}
+.footer-inner {
+  max-width: 1140px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 24px;
+}
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px; font-weight: 700;
+  color: var(--white); text-decoration: none;
+}
+.footer-links {
+  display: flex; gap: 32px;
+}
+.footer-links a {
+  font-size: 13px; color: rgba(255,255,255,0.4);
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--teal-light); }
+.footer-copy {
+  font-size: 13px; color: rgba(255,255,255,0.25);
+  width: 100%; padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  text-align: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .hero { padding: 120px 24px 80px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+  .hero-visual { display: none; }
+  .manifesto-inner { grid-template-columns: 1fr; gap: 32px; }
+  .problem-grid { grid-template-columns: 1fr 1fr; }
+  .for-inner { grid-template-columns: 1fr; gap: 48px; }
+  .tools-grid { grid-template-columns: 1fr; }
+  .how-steps { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .how-steps::before { display: none; }
+  .influencer-inner { grid-template-columns: 1fr; }
+  .about-inner { grid-template-columns: 1fr; }
+  .cred-grid { grid-template-columns: 1fr; }
+  section, .problem-section, .for-section, .tools-section,
+  .how-section, .influencer-section, .about-section { padding: 72px 24px; }
+  .manifesto { padding: 56px 24px; }
+  .cta-section { padding: 80px 24px; }
+  footer { padding: 40px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-dot"></span>
+    Christine Walker
+  </a>
+  <div class="nav-links">
+    <a href="#problem">The Problem</a>
+    <a href="#tools">The Tools</a>
+    <a href="#for-who">Who This Is For</a>
+    <a href="#about">About</a>
+    <a href="customer-clarity-tool.html" class="nav-cta">Get Clarity</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-orb hero-bg-orb-1"></div>
+  <div class="hero-bg-orb hero-bg-orb-2"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-tag animate-up">
+        <span class="hero-tag-dot"></span>
+        Business Fundamentals
+      </div>
+      <h1 class="hero-title animate-up delay-1">
+        You cannot sell
+        <span class="line-indent">what you cannot
+        <em>target.</em></span>
+      </h1>
+      <p class="hero-sub animate-up delay-2">
+        Before ads, before funnels, before content, there is one thing that decides everything. <strong>Do you actually understand who you are talking to?</strong> This is where that work happens.
+      </p>
+      <div class="hero-actions animate-up delay-3">
+        <a href="customer-clarity-tool.html" class="btn-primary">Get Clarity on Your Customer</a>
+        <a href="#tools" class="btn-ghost">See All Tools</a>
+      </div>
+      <div class="hero-proof animate-up delay-4">
+        <div class="hero-proof-dots">
+          <div class="hero-proof-dot pd1">B</div>
+          <div class="hero-proof-dot pd2">S</div>
+          <div class="hero-proof-dot pd3">M</div>
+          <div class="hero-proof-dot pd4">A</div>
+        </div>
+        Business owners, influencers, and founders using these tools to build real sales clarity.
+      </div>
+    </div>
+    <div class="hero-visual animate-up delay-3">
+      <div class="hero-card-float float-top">
+        <div class="float-icon">🎯</div>
+        <div class="float-text">
+          <strong>15 Questions</strong>
+          <span>AI coached, one at a time</span>
+        </div>
+      </div>
+      <div class="hero-card-main">
+        <p class="hero-card-label">Customer Clarity Tool, Live Preview</p>
+        <p class="hero-card-q">What keeps your ideal customer up at night?</p>
+        <div class="hero-card-answer">
+          They know their business is good. They just cannot find the words that make someone else feel it. The content goes out. Nothing comes back. They go to bed wondering if they are doing it wrong.
+        </div>
+        <div class="hero-card-status">
+          <span class="status-dot"></span>
+          AI coaching in progress
+        </div>
+      </div>
+      <div class="hero-card-float float-bottom">
+        <div class="float-num">15</div>
+        <div class="float-num-label">Questions to full clarity</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<div class="manifesto">
+  <div class="manifesto-inner">
+    <div>
+      <p class="manifesto-label">The Core Principle</p>
+      <p class="manifesto-eyebrow">Clarity before everything.</p>
+    </div>
+    <p class="manifesto-text">
+      <strong>90 percent of what grabs people is their pain.</strong> If your first impression demonstrates that you understand their pain at a visceral, specific level, they will listen to everything you say next. Most businesses skip this step. They build the offer, write the ad, launch the campaign, and wonder why it does not convert. The answer is always the same. They never did the clarity work first. This platform exists to make that work accessible, repeatable, and something you can humble yourself to revisit every time you launch something new.
+    </p>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem-section" id="problem">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="section-label">The Problem</p>
+      <h2 class="section-title">These are the signs<br>you need this <em>work.</em></h2>
+      <p class="section-sub">If any of these feel familiar, you have not done the clarity work yet. That is not a failure. It is a starting point.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-item">
+        <div class="problem-num">01</div>
+        <h4>Posting Without Converting</h4>
+        <p>You are showing up consistently but the content is not moving people. It speaks to everyone and lands with no one.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">02</div>
+        <h4>Ads That Burned Cash</h4>
+        <p>You ran ads. You spent money. You got nothing back. Not because ads do not work. Because the message missed the real pain.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">03</div>
+        <h4>Cannot Explain the Value</h4>
+        <p>You know your service is good. You just cannot find the words that make someone else feel that immediately and stop scrolling.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">04</div>
+        <h4>Offers Feel Scattered</h4>
+        <p>Multiple offers, unclear positioning. They blur together. So does your message. So does what makes you different.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">05</div>
+        <h4>Interviewing Without a Framework</h4>
+        <p>You talk to business owners but the conversations stay surface level. You walk away without the information that actually converts.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">06</div>
+        <h4>Growth Without Foundation</h4>
+        <p>You are building audience and content but there is no system underneath it. Momentum comes in bursts and never compounds.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO THIS IS FOR -->
+<section class="for-section" id="for-who">
+  <div class="section-inner">
+    <div class="for-inner">
+      <div>
+        <p class="section-label">Who This Is For</p>
+        <h2 class="section-title">Built for the people<br>building in <em>public.</em></h2>
+        <p class="section-sub" style="margin-bottom:32px">Three distinct people come here. All of them need the same thing first. Clarity on who they are actually talking to.</p>
+        <a href="customer-clarity-tool.html" class="btn-primary">Start the Clarity Tool</a>
+      </div>
+      <div class="for-cards">
+        <div class="for-card">
+          <div class="for-card-icon">📱</div>
+          <div>
+            <h4>Influencers and Content Creators</h4>
+            <p>You have the audience. Now you need to learn how to interview a business owner with precision, surface their real pain, and turn that into content that sells. This is the framework that teaches you how.</p>
+          </div>
+        </div>
+        <div class="for-card">
+          <div class="for-card-icon clay-bg">🏢</div>
+          <div>
+            <h4>Business Owners</h4>
+            <p>You have the product or service. You just have not done the clarity work that tells you exactly who needs it and what to say to reach them. That work happens here before you spend a dollar on ads.</p>
+          </div>
+        </div>
+        <div class="for-card">
+          <div class="for-card-icon honey-bg">🚀</div>
+          <div>
+            <h4>Founders and Entrepreneurs</h4>
+            <p>You are building something new and you know the message is not quite right yet. The clarity framework helps you get specific enough to actually convert before you scale anything.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="tools-section" id="tools">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="section-label tools-label">The Toolkit</p>
+      <h2 class="section-title tools-title">The tools that build<br>a real <em>sales force.</em></h2>
+      <p class="section-sub tools-sub">Each tool does one specific job. Together they take you from no clarity to a full funnel of business owners ready to run ads.</p>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-card featured">
+        <span class="tool-badge active">Live Now</span>
+        <h4>Customer Clarity Tool</h4>
+        <p>15 questions. AI coaching on every answer. A complete marketing user story at the end. This is where everything starts. You cannot skip it.</p>
+        <a href="customer-clarity-tool.html" class="tool-link">Start the framework <span>→</span></a>
+      </div>
+      <div class="tool-card">
+        <span class="tool-badge coming">Coming Soon</span>
+        <h4>Pain Point Scraper</h4>
+        <p>Drop a link, a brand name, or a search term. Pull the real language people use to describe their pain. No guessing. No assumptions. Just data.</p>
+        <span class="tool-link" style="opacity:0.4;cursor:default">In development</span>
+      </div>
+      <div class="tool-card">
+        <span class="tool-badge coming">Coming Soon</span>
+        <h4>Funnel Builder</h4>
+        <p>Take the clarity work and turn it into a complete ad funnel. Audience, message, hook, offer. Built from the ground up on what you now know about your customer.</p>
+        <span class="tool-link" style="opacity:0.4;cursor:default">In development</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="section-inner">
+    <div class="section-header" style="text-align:center;max-width:560px;margin:0 auto 0">
+      <p class="section-label">How It Works</p>
+      <h2 class="section-title">From zero clarity<br>to <em>ad-ready.</em></h2>
+    </div>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-step-num">01</div>
+        <h4>Answer 15 Questions</h4>
+        <p>Work through the customer clarity framework one question at a time. No rushing. No skipping.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">02</div>
+        <h4>Get AI Coached</h4>
+        <p>Every answer goes through an AI coaching loop. It will not let you proceed until your answer is specific enough to be useful.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">03</div>
+        <h4>Get Your Story</h4>
+        <p>At the end, a complete marketing user story is generated from your answers. Customer avatar, core pain, messaging architecture, and ad copy foundation.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">04</div>
+        <h4>Build the Funnel</h4>
+        <p>Take that story into your ads, your content, your pitch. Now everything you build is rooted in something real.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFLUENCER SECTION -->
+<section class="influencer-section">
+  <div class="influencer-inner">
+    <div>
+      <p class="section-label">For Influencers</p>
+      <h2 class="section-title">Learn to interview<br>a business like a <em>pro.</em></h2>
+      <p class="section-sub" style="margin-bottom:32px">
+        The clarity framework is also a training tool. When you know how to ask the right questions, you become the person businesses want to work with. You stop being a content creator and start being a sales asset.
+      </p>
+      <p style="font-size:15px;line-height:1.8;color:var(--charcoal-soft);margin-bottom:36px;font-weight:300">
+        Sacred Space Studios is building a content-led sales force. Influencers who understand customer pain, can surface it in an interview, and know how to turn that into content that converts. This tool is step one of that training.
+      </p>
+      <a href="customer-clarity-tool.html" class="btn-primary">Start Your Training</a>
+    </div>
+    <div class="influencer-visual">
+      <div class="iv-header">
+        <div class="iv-avatar">🎙</div>
+        <div>
+          <div class="iv-name">Influencer Interview Mode</div>
+          <div class="iv-role">Using the Clarity Tool as a Business Interview Framework</div>
+        </div>
+      </div>
+      <p class="iv-question">"What is the single biggest problem your customers face before they find you?"</p>
+      <div class="iv-answer">
+        They know they need to be running ads but every time they try they lose money. They feel like everyone else figured something out that they missed. They are doing everything right on the surface and nothing is working underneath.
+      </div>
+      <div class="iv-feedback">
+        <div class="iv-feedback-icon">✓</div>
+        <div class="iv-feedback-text">
+          <strong>Cleared.</strong> That answer is specific and visceral. You now have the language to write an ad, a caption, or a pitch that will stop this business owner mid-scroll.
+        </div>
+      </div>
+      <div class="iv-tools">
+        <span class="iv-tool-tag active">Clarity Tool</span>
+        <span class="iv-tool-tag">Pain Point Scraper</span>
+        <span class="iv-tool-tag">Funnel Builder</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="section-inner">
+    <div class="about-inner">
+      <div class="about-quote-wrap">
+        <span class="about-quote-mark">"</span>
+        <p class="about-quote">Understanding your ideal customer is not a nice-to-have. It is the foundation everything else is built on. And it is something every business owner needs to humble themselves to revisit.</p>
+        <p class="about-attr">Christine Walker, Founder</p>
+      </div>
+      <div class="about-text">
+        <p class="section-label">About Christine Walker</p>
+        <p>The same problem kept showing up across every business and every client. <strong>Leaders do not know who they are actually talking to.</strong> When you are focused on delivering, creating, and keeping things alive, the clarity work gets left behind.</p>
+        <p>This platform exists because I built businesses across real estate, wellness, and community, and the same failure pattern appeared every time. Offers blur together. Messaging speaks to everyone and lands with no one. Not because the product is bad. Because the clarity work was never done.</p>
+        <p>Sacred Space Studios is building on top of this. A content-led, influencer-powered sales force where clarity is the currency and every piece of content is rooted in something real.</p>
+        <div class="cred-grid">
+          <div class="cred-item">
+            <strong>Real Estate</strong>
+            Licensed Florida REALTOR, NY-to-FL relocation specialist
+          </div>
+          <div class="cred-item">
+            <strong>Facilitation</strong>
+            RYT certified, 8 plus years, women's circles and community
+          </div>
+          <div class="cred-item">
+            <strong>Sacred Space Studios</strong>
+            Creator coworking and influencer training hub, Gulfport FL
+          </div>
+          <div class="cred-item">
+            <strong>C Frameworks</strong>
+            Business education, coaching, and systems for founders
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <p class="cta-eyebrow">Start Here</p>
+  <h2 class="cta-title">Get clarity on your customer.<br><em>Then build everything else.</em></h2>
+  <p class="cta-sub">The tool is free to start. Bring your own API key and run all 15 questions with live AI coaching. Walk away with a complete marketing user story ready to turn into ads.</p>
+  <a href="customer-clarity-tool.html" class="btn-cta-white">Start the Customer Clarity Tool</a>
+  <p class="cta-note">Free to start. No account required. Your answers stay in your browser.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="#" class="footer-logo">Christine Walker</a>
+    <div class="footer-links">
+      <a href="#problem">The Problem</a>
+      <a href="#tools">Tools</a>
+      <a href="#for-who">Who It Is For</a>
+      <a href="#about">About</a>
+      <a href="customer-clarity-tool.html">Clarity Tool</a>
+    </div>
+    <p class="footer-copy">Christine Walker, Customer Clarity and Business Fundamentals. Sacred Space Studios, Gulfport FL. All rights reserved 2025.</p>
+  </div>
+</footer>
+
+</body>
+</html>

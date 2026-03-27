@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Clarity Tool, Christine Walker</title>
+<meta name="description" content="15 AI-coached questions that produce a complete marketing user story. Know exactly who you are talking to before you spend a dollar on ads.">
+<meta property="og:title" content="Customer Clarity Tool">
+<meta property="og:description" content="15 questions. AI coaching on every answer. Walk away with a complete customer avatar, messaging architecture, and ad copy foundation.">
+<meta name="theme-color" content="#3D8B7A">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #F5F0E8;
+    --sand-dark: #EDE6D8;
+    --teal: #3D8B7A;
+    --teal-dark: #2E6B5E;
+    --teal-light: #6AADA0;
+    --clay: #BF6B3F;
+    --honey: #C8953A;
+    --charcoal: #2A2420;
+    --charcoal-soft: #4A3F38;
+    --muted: #9E9089;
+    --border: #DDD5C8;
+    --white: #FDFAF6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--sand);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* TYPOGRAPHY */
+  .display { font-family: 'Playfair Display', serif; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(245, 240, 232, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 600;
+    color: var(--charcoal); text-decoration: none;
+    letter-spacing: -0.3px;
+  }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    font-size: 14px; font-weight: 500; letter-spacing: 0.3px;
+    color: var(--charcoal-soft); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-cta {
+    background: var(--teal) !important; color: var(--white) !important;
+    padding: 10px 22px; border-radius: 4px;
+    font-weight: 600 !important;
+  }
+  .nav-cta:hover { background: var(--teal-dark) !important; }
+
+  .btn-primary {
+    background: var(--teal); color: var(--white);
+    padding: 16px 32px; border-radius: 4px;
+    font-size: 15px; font-weight: 600; letter-spacing: 0.3px;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.2s; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--teal-dark); transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent; color: var(--charcoal);
+    padding: 16px 32px; border-radius: 4px;
+    font-size: 15px; font-weight: 500;
+    text-decoration: none; border: 1.5px solid var(--border);
+    cursor: pointer; transition: all 0.2s; display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* SECTIONS */
+  section { padding: 40px; }
+  .section-inner { max-width: 860px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 2.5px;
+    color: var(--muted); text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.15; font-weight: 700;
+    color: var(--charcoal); margin-bottom: 24px;
+  }
+  .section-title em { font-style: italic; color: var(--teal); }
+
+  /* FOOTER */
+  footer {
+    background: var(--charcoal);
+    padding: 32px 40px; text-align: center;
+  }
+  footer p { font-size: 14px; color: rgba(255,255,255,0.4); }
+  footer span { color: var(--teal-light); }
+
+  /* ===================== */
+  /* TOOL SECTION */
+  /* ===================== */
+  #tool { background: var(--sand); }
+
+  .tool-wrapper {
+    max-width: 780px; margin: 0 auto;
+  }
+
+  /* API KEY SETUP */
+  .api-setup {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 48px;
+    margin-bottom: 40px;
+  }
+  .api-setup h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; margin-bottom: 12px; color: var(--charcoal);
+  }
+  .api-setup p {
+    font-size: 15px; line-height: 1.7; color: var(--charcoal-soft);
+    margin-bottom: 32px;
+  }
+  .provider-tabs {
+    display: flex; gap: 8px; margin-bottom: 24px;
+  }
+  .provider-tab {
+    padding: 10px 20px; border-radius: 4px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    border: 1.5px solid var(--border);
+    background: transparent; color: var(--charcoal-soft);
+    transition: all 0.15s;
+  }
+  .provider-tab.active {
+    background: var(--teal); color: var(--white); border-color: var(--teal);
+  }
+  .key-input-wrap { position: relative; margin-bottom: 16px; }
+  .key-input {
+    width: 100%; padding: 14px 18px;
+    border: 1.5px solid var(--border); border-radius: 6px;
+    font-size: 15px; font-family: 'Source Sans 3', sans-serif;
+    background: var(--sand); color: var(--charcoal);
+    outline: none; transition: border-color 0.15s;
+  }
+  .key-input:focus { border-color: var(--teal); }
+  .key-note {
+    font-size: 13px; color: var(--muted); margin-bottom: 24px;
+  }
+  .key-note a { color: var(--teal); text-decoration: none; }
+
+  /* PROGRESS */
+  .progress-bar-wrap {
+    background: var(--border);
+    height: 4px; border-radius: 2px;
+    margin-bottom: 12px; overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%; background: var(--teal);
+    border-radius: 2px; transition: width 0.4s ease;
+  }
+  .progress-meta {
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 48px;
+    margin-bottom: 24px;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .q-section-badge {
+    display: inline-block;
+    padding: 4px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 20px;
+  }
+  .q-section-badge.problem {
+    background: rgba(191,107,63,0.1); color: var(--clay);
+  }
+  .q-section-badge.solution {
+    background: rgba(61,139,122,0.1); color: var(--teal);
+  }
+  .q-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .q-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 700;
+    color: var(--charcoal); margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .q-purpose {
+    font-size: 14px; color: var(--muted);
+    margin-bottom: 8px; font-style: italic;
+  }
+  .q-how {
+    font-size: 14px; line-height: 1.7; color: var(--charcoal-soft);
+    margin-bottom: 28px;
+    padding: 16px 20px;
+    background: var(--sand); border-radius: 6px;
+    border-left: 3px solid var(--border);
+  }
+  .q-example {
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 28px; line-height: 1.6;
+    font-style: italic;
+  }
+  .q-example strong { color: var(--charcoal-soft); font-style: normal; }
+  textarea {
+    width: 100%; padding: 16px 20px;
+    border: 1.5px solid var(--border); border-radius: 6px;
+    font-size: 15px; line-height: 1.7;
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--sand); color: var(--charcoal);
+    resize: vertical; min-height: 160px;
+    outline: none; transition: border-color 0.15s;
+  }
+  textarea:focus { border-color: var(--teal); }
+  .word-count {
+    font-size: 12px; color: var(--muted);
+    text-align: right; margin-top: 8px; margin-bottom: 20px;
+  }
+  .word-count.ok { color: var(--teal); }
+
+  /* AI FEEDBACK */
+  .ai-feedback {
+    border-radius: 8px; padding: 24px;
+    margin: 20px 0; font-size: 14px; line-height: 1.7;
+    animation: slideUp 0.25s ease;
+  }
+  .ai-feedback.pending {
+    background: rgba(200,149,58,0.08);
+    border: 1px solid rgba(200,149,58,0.2);
+    color: var(--charcoal-soft);
+  }
+  .ai-feedback.cleared {
+    background: rgba(61,139,122,0.08);
+    border: 1px solid rgba(61,139,122,0.25);
+    color: var(--charcoal-soft);
+  }
+  .ai-feedback.needs-work {
+    background: rgba(191,107,63,0.08);
+    border: 1px solid rgba(191,107,63,0.2);
+    color: var(--charcoal-soft);
+  }
+  .feedback-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .feedback-label.cleared { color: var(--teal); }
+  .feedback-label.needs-work { color: var(--clay); }
+  .feedback-label.pending { color: var(--honey); }
+
+  /* BUTTONS ROW */
+  .q-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
+  .btn-coach {
+    background: var(--charcoal); color: var(--white);
+    padding: 13px 26px; border-radius: 4px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    border: none; transition: all 0.15s;
+  }
+  .btn-coach:hover { background: var(--charcoal-soft); }
+  .btn-coach:disabled {
+    background: var(--border); color: var(--muted); cursor: not-allowed;
+  }
+  .btn-lock {
+    background: var(--teal); color: var(--white);
+    padding: 13px 26px; border-radius: 4px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    border: none; transition: all 0.15s;
+  }
+  .btn-lock:hover { background: var(--teal-dark); }
+  .btn-lock:disabled {
+    background: var(--border); color: var(--muted); cursor: not-allowed;
+  }
+
+  /* LOCKED STATE */
+  .answer-locked {
+    background: var(--sand);
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 20px; font-size: 15px; line-height: 1.7;
+    color: var(--charcoal-soft); margin-bottom: 20px;
+    position: relative;
+  }
+  .locked-badge {
+    position: absolute; top: 12px; right: 14px;
+    font-size: 11px; font-weight: 600; letter-spacing: 1px;
+    color: var(--teal); text-transform: uppercase;
+    background: rgba(61,139,122,0.1);
+    padding: 3px 10px; border-radius: 10px;
+  }
+
+  /* STORY OUTPUT */
+  .story-section {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 48px;
+    margin-top: 40px;
+    animation: slideUp 0.4s ease;
+  }
+  .story-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px; font-weight: 700;
+    color: var(--charcoal); margin-bottom: 8px;
+  }
+  .story-section .story-sub {
+    font-size: 15px; color: var(--muted); margin-bottom: 40px;
+  }
+  .story-block { margin-bottom: 36px; }
+  .story-block h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--teal); margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .story-block p, .story-block li {
+    font-size: 15px; line-height: 1.8; color: var(--charcoal-soft);
+    margin-bottom: 8px;
+  }
+  .story-block ul { padding-left: 20px; }
+  .generating-state {
+    text-align: center; padding: 60px 40px;
+    color: var(--muted); font-size: 16px;
+  }
+  .generating-state .spinner {
+    width: 40px; height: 40px;
+    border: 3px solid var(--border);
+    border-top-color: var(--teal);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 20px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .export-btn {
+    background: var(--charcoal); color: var(--white);
+    padding: 14px 28px; border-radius: 4px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    border: none; margin-top: 32px; margin-right: 12px;
+    transition: background 0.15s;
+  }
+  .export-btn:hover { background: var(--charcoal-soft); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 24px; }
+    .question-card, .api-setup { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo display">Christine Walker</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#tools">All Tools</a>
+    <a href="index.html#about">About</a>
+  </div>
+</nav>
+
+<!-- TOOL SECTION -->
+<section id="tool" style="padding-top:100px;padding-bottom:80px;">
+  <div class="section-inner">
+    <div class="tool-wrapper">
+
+      <!-- LEAN HEADER -->
+      <div style="text-align:center;margin-bottom:48px;">
+        <p class="section-label" style="margin-bottom:10px">Customer Clarity Tool</p>
+        <h1 class="section-title display" style="margin-bottom:16px;max-width:560px;margin-left:auto;margin-right:auto">
+          15 questions.<br><em>One marketing story.</em>
+        </h1>
+        <p style="font-size:16px;color:var(--charcoal-soft);line-height:1.75;max-width:480px;margin:0 auto;font-weight:300">
+          AI coached on every answer. Walk away with a complete customer avatar, messaging architecture, and ad copy foundation ready to use.
+        </p>
+        <div style="display:flex;justify-content:center;gap:24px;margin-top:24px;flex-wrap:wrap;">
+          <span style="font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px;">
+            <span style="width:6px;height:6px;background:var(--teal);border-radius:50%;display:inline-block;"></span>
+            15 guided questions
+          </span>
+          <span style="font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px;">
+            <span style="width:6px;height:6px;background:var(--teal);border-radius:50%;display:inline-block;"></span>
+            AI coaching on every answer
+          </span>
+          <span style="font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px;">
+            <span style="width:6px;height:6px;background:var(--teal);border-radius:50%;display:inline-block;"></span>
+            Full marketing story at the end
+          </span>
+        </div>
+      </div>
+
+      <!-- API SETUP -->
+      <div class="api-setup" id="apiSetup">
+        <h3 class="display">Connect Your AI</h3>
+        <p>Choose your AI provider and paste your API key below. Your key is stored only in this browser session and is never sent to any server.</p>
+        <div class="provider-tabs">
+          <button class="provider-tab active" onclick="selectProvider('anthropic')">Claude (Anthropic)</button>
+          <button class="provider-tab" onclick="selectProvider('openai')">GPT-4 (OpenAI)</button>
+          <button class="provider-tab" onclick="selectProvider('gemini')">Gemini (Google)</button>
+        </div>
+        <div class="key-input-wrap">
+          <input type="password" class="key-input" id="apiKeyInput" placeholder="Paste your API key here...">
+        </div>
+        <p class="key-note" id="keyNote">
+          Get your Claude key at <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a>. Free to start.
+        </p>
+        <button class="btn-primary" onclick="startTool()">Start the Framework →</button>
+        <button class="btn-secondary" style="margin-left:12px" onclick="startToolDemo()">Try Without AI Key</button>
+      </div>
+
+      <!-- PROGRESS -->
+      <div id="toolProgress" style="display:none">
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+        </div>
+        <div class="progress-meta">
+          <span id="progressLabel">Question 1 of 15</span>
+          <span id="progressSection">Problem Section</span>
+        </div>
+      </div>
+
+      <!-- QUESTIONS CONTAINER -->
+      <div id="questionsContainer"></div>
+
+      <!-- STORY OUTPUT -->
+      <div id="storyOutput"></div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><span>Christine Walker</span>, Customer Clarity Tool. Sacred Space Studios, Gulfport FL. All rights reserved 2025.</p>
+</footer>
+
+<script>
+// =====================
+// DATA
+// =====================
+const questions = [
+  {
+    id: 1, section: 'problem',
+    title: 'What are the main problems your business solves?',
+    purpose: 'Establish the foundation,every symptom surrounding the core problem.',
+    howToAnswer: 'List every problem and symptom you can think of. Do not filter yet. Think about what keeps your ideal customer up at night.',
+    example: '"They have 5K to 50K followers but inconsistent income. Some months $800, some months $3K, some months $0. They rely on inbound DMs instead of outbound systems."',
+    placeholder: 'Describe the main problems your business solves in as much detail as you can...'
+  },
+  {
+    id: 2, section: 'problem',
+    title: 'Have you ever been personally affected by any of these problems?',
+    purpose: 'Build genuine empathy through your own lived experience.',
+    howToAnswer: 'Write about how these feelings have shown up in your own life. Use visceral language,helplessness, stagnancy, frustration, anxiety.',
+    example: '"I feel an overall sense of helplessness when my career is out of my hands. That feeling of stagnancy,wanting to do, do, do, and being forced to wait,is crippling."',
+    placeholder: 'Share your personal connection to this problem...'
+  },
+  {
+    id: 3, section: 'problem',
+    title: 'How does this problem normally affect your customers?',
+    purpose: 'Move from feelings to impact,connect emotional experience to tangible consequences.',
+    howToAnswer: 'Go beyond business impact. How does this affect them at home? With family? Their self-image? Map the ripple effects.',
+    example: '"They are not meeting financial goals. Spending time away from family because they have to hustle harder. Feeling like a fraud despite real results."',
+    placeholder: 'Describe the full impact on your customers,business and personal...'
+  },
+  {
+    id: 4, section: 'problem',
+    title: 'Is there a customer whose story about the problem stood out to you?',
+    purpose: 'Ground everything in one real person\'s experience.',
+    howToAnswer: 'Find someone who IS your ideal customer. Describe their actual words, actual feelings, actual situation.',
+    example: '"A lifestyle creator with solid engagement shared that she postponed filming for weeks because she did not have the right corner ready."',
+    placeholder: 'Tell me about a specific customer whose story captures the problem perfectly...'
+  },
+  {
+    id: 5, section: 'problem',
+    title: 'Where do they encounter the problem?',
+    purpose: 'Localize the pain,understand WHERE it hits so your messaging meets them there.',
+    howToAnswer: 'Is it at home, at work, or both? Describe the specific physical and emotional context. The time of day. What they are doing when it surfaces.',
+    example: '"The problem shows up at home,quietly and repeatedly. Late at night when they open their laptop and close it again without making a decision."',
+    placeholder: 'Describe the specific setting and moment when the problem is most acute...'
+  },
+  {
+    id: 6, section: 'problem',
+    title: 'Are there other symptoms that this problem creates?',
+    purpose: 'Go deeper,the second and third order effects of the core problem.',
+    howToAnswer: 'Think downstream. If the core problem creates stress, what does that stress cause? Map the chain reaction into their relationships, decisions, and daily life.',
+    example: '"Content becomes reactive instead of strategic. They chase trends instead of building authority. Their partner notices the irritability. They stop making other decisions."',
+    placeholder: 'Describe the ripple effects,what breaks down because of this problem...'
+  },
+  {
+    id: 7, section: 'problem',
+    title: 'How much does this problem cost your ideal customer in a year?',
+    purpose: 'Quantify the pain,transform abstract suffering into concrete financial reality.',
+    howToAnswer: 'Consider lost revenue, wasted time, cost of wrong decisions, missed opportunities. Be specific. Give ranges. Show the math.',
+    example: '"If a creator undercharges by $400 per post and lands 2 deals per month, that is $9,600 per year in unrealized income."',
+    placeholder: 'Break down the annual financial cost as specifically as possible...'
+  },
+  {
+    id: 8, section: 'problem',
+    title: 'Are there other solutions your customer may be familiar with?',
+    purpose: 'Know your competitive landscape from the customer\'s perspective.',
+    howToAnswer: 'List everything they have already tried,formal competitors, DIY approaches, the "do nothing" option, and why each one failed them.',
+    example: '"Generic online courses, YouTube videos, random coaches they found on Instagram, friends who moved and seemed happy, Zillow at midnight."',
+    placeholder: 'List every alternative they have tried or considered before finding you...'
+  },
+  {
+    id: 9, section: 'solution',
+    title: 'Is your solution a product, a service, or both?',
+    purpose: 'Simple classification that shapes everything about how you frame and sell it.',
+    howToAnswer: 'State clearly what form your solution takes. Describe each component. If it is a service, describe what a client actually experiences.',
+    example: '"It is a service delivered in two phases: a clarity audit in week one and a strategy session in week two, with async support throughout."',
+    placeholder: 'Describe the form and structure of your solution...'
+  },
+  {
+    id: 10, section: 'solution',
+    title: 'Did your solution change over time, and how?',
+    purpose: 'Show evolution,a refined solution is more credible than one that appeared fully formed.',
+    howToAnswer: 'Describe how your understanding of the problem deepened and how that changed what you offer. What did you cut? What did you add?',
+    example: '"I started with a 30-day program. After three cohorts I realized the transformation happened in the first 10 days, so I cut the rest."',
+    placeholder: 'Describe how your solution evolved through real experience...'
+  },
+  {
+    id: 11, section: 'solution',
+    title: 'Is your solution permanent, or does it require upkeep?',
+    purpose: 'Set honest expectations,build trust and reduce churn before it starts.',
+    howToAnswer: 'Be direct about whether this is a one-time fix or requires ongoing maintenance. If both, explain clearly.',
+    example: '"The framework is a one-time deliverable. The mindset shift it requires is ongoing. I am honest about that upfront."',
+    placeholder: 'Describe the ongoing nature of your solution honestly...'
+  },
+  {
+    id: 12, section: 'solution',
+    title: 'Did you personally try other solutions before creating this one?',
+    purpose: 'Establish credibility through competitive experience.',
+    howToAnswer: 'Name specific alternatives you tried. What worked, what did not, and what gap none of them filled that yours does.',
+    example: '"I tried three different CRMs, two coaches, and a mastermind group. None of them started with the customer question. They all assumed you already knew who you were talking to."',
+    placeholder: 'Describe what you tried before creating your own solution...'
+  },
+  {
+    id: 13, section: 'solution',
+    title: 'How do your best customers first react to your solution?',
+    purpose: 'Understand the emotional response so you can recreate it in your marketing.',
+    howToAnswer: 'Think about your happiest clients. What was the first thing they said? Relief? Surprise? The "I should have known this" moment?',
+    example: '"The most common reaction is relief followed by mild frustration,relief that it is finally clear and frustration that it took this long."',
+    placeholder: 'Describe the emotional reaction of your best clients when they first experience your solution...'
+  },
+  {
+    id: 14, section: 'solution',
+    title: 'How quickly do they fully adopt your solution?',
+    purpose: 'Address the integration question before your prospect asks it.',
+    howToAnswer: 'Be honest about the adoption timeline. Break it into milestones. What does week one look like? Month three?',
+    example: '"They see the framework in session one. They start using it within the first week. By month two it has replaced every other way they thought about their customer."',
+    placeholder: 'Describe the realistic adoption and integration timeline...'
+  },
+  {
+    id: 15, section: 'solution',
+    title: 'How long before your solution pays for itself?',
+    purpose: 'Justify the investment with a concrete timeline.',
+    howToAnswer: 'Calculate how long it takes to recoup the investment. Include direct returns and time saved. Give a realistic best case and typical case.',
+    example: '"For most clients, one better-positioned offer more than covers the investment within the first 60 days."',
+    placeholder: 'Walk through the return on investment timeline as specifically as possible...'
+  }
+];
+
+// =====================
+// STATE
+// =====================
+let state = {
+  provider: 'anthropic',
+  apiKey: '',
+  demoMode: false,
+  currentQuestion: 0,
+  answers: Array(15).fill(''),
+  feedback: Array(15).fill(null),
+  cleared: Array(15).fill(false),
+  locked: Array(15).fill(false),
+  started: false
+};
+
+// =====================
+// PROVIDER SELECTION
+// =====================
+function selectProvider(p) {
+  state.provider = p;
+  document.querySelectorAll('.provider-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  const notes = {
+    anthropic: 'Get your Claude key at <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a>. Free to start.',
+    openai: 'Get your OpenAI key at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.',
+    gemini: 'Get your Gemini key at <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com</a>.'
+  };
+  document.getElementById('keyNote').innerHTML = notes[p];
+}
+
+function startTool() {
+  const key = document.getElementById('apiKeyInput').value.trim();
+  if (!key) { alert('Please paste your API key to continue, or use Try Without AI Key.'); return; }
+  state.apiKey = key;
+  state.started = true;
+  beginFramework();
+}
+
+function startToolDemo() {
+  state.demoMode = true;
+  state.started = true;
+  beginFramework();
+}
+
+function beginFramework() {
+  document.getElementById('apiSetup').style.display = 'none';
+  document.getElementById('toolProgress').style.display = 'block';
+  renderQuestion(0);
+  updateProgress();
+}
+
+// =====================
+// PROGRESS
+// =====================
+function updateProgress() {
+  const pct = (state.currentQuestion / 15) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = state.currentQuestion >= 15 ? 'All questions complete' : `Question ${state.currentQuestion + 1} of 15`;
+  const q = questions[state.currentQuestion];
+  if (q) {
+    document.getElementById('progressSection').textContent = q.section === 'problem' ? 'Problem Section,Questions 1–8' : 'Solution Section,Questions 9–15';
+  }
+}
+
+// =====================
+// RENDER QUESTION
+// =====================
+function renderQuestion(index) {
+  const container = document.getElementById('questionsContainer');
+  if (index >= 15) { renderStoryGeneration(); return; }
+  const q = questions[index];
+  const isLocked = state.locked[index];
+  const fb = state.feedback[index];
+
+  let feedbackHTML = '';
+  if (fb) {
+    const cls = fb.isCleared ? 'cleared' : 'needs-work';
+    const label = fb.isCleared ? 'Cleared' : 'Needs More Depth';
+    feedbackHTML = `
+      <div class="ai-feedback ${cls}">
+        <div class="feedback-label ${cls}">${fb.isCleared ? '✓' : '→'} ${label}</div>
+        <div>${fb.feedback}</div>
+        ${fb.suggestion && !fb.isCleared ? `<div style="margin-top:10px;font-style:italic;color:var(--muted)">${fb.suggestion}</div>` : ''}
+      </div>`;
+  }
+
+  const answerField = isLocked
+    ? `<div class="answer-locked">${state.answers[index]}<span class="locked-badge">Locked</span></div>`
+    : `<textarea id="answerText" placeholder="${q.placeholder}" oninput="onTextInput(${index})">${state.answers[index]}</textarea>
+       <div class="word-count" id="wordCount">0 words,need at least 40 to submit</div>`;
+
+  const actions = isLocked
+    ? `<button class="btn-lock" onclick="nextQuestion(${index})">Next Question →</button>`
+    : `<button class="btn-coach" id="coachBtn" onclick="getCoaching(${index})" disabled>Get AI Coaching</button>
+       <button class="btn-lock" id="lockBtn" onclick="lockAnswer(${index})" disabled>${state.cleared[index] ? 'Lock Answer and Continue →' : 'Lock Answer and Continue →'}</button>`;
+
+  container.innerHTML = `
+    <div class="question-card">
+      <span class="q-section-badge ${q.section}">${q.section === 'problem' ? 'Problem Section' : 'Solution Section'}</span>
+      <p class="q-number display">Question ${q.id} of 15</p>
+      <h3 class="q-title display">${q.title}</h3>
+      <p class="q-purpose">${q.purpose}</p>
+      <div class="q-how">${q.howToAnswer}</div>
+      <p class="q-example"><strong>Example:</strong> ${q.example}</p>
+      ${answerField}
+      ${feedbackHTML}
+      <div class="q-actions">${actions}</div>
+    </div>`;
+
+  if (!isLocked) {
+    updateWordCount(index);
+    // restore buttons state
+    const ta = document.getElementById('answerText');
+    if (ta) {
+      const words = ta.value.trim().split(/\s+/).filter(w => w).length;
+      const coachBtn = document.getElementById('coachBtn');
+      const lockBtn = document.getElementById('lockBtn');
+      if (coachBtn) coachBtn.disabled = words < 40;
+      if (lockBtn) lockBtn.disabled = !state.cleared[index];
+    }
+  }
+  updateProgress();
+}
+
+function onTextInput(index) {
+  const ta = document.getElementById('answerText');
+  state.answers[index] = ta.value;
+  updateWordCount(index);
+  const words = ta.value.trim().split(/\s+/).filter(w => w).length;
+  const coachBtn = document.getElementById('coachBtn');
+  const lockBtn = document.getElementById('lockBtn');
+  if (coachBtn) coachBtn.disabled = words < 40;
+  if (lockBtn) lockBtn.disabled = !state.cleared[index];
+}
+
+function updateWordCount(index) {
+  const ta = document.getElementById('answerText');
+  const wc = document.getElementById('wordCount');
+  if (!ta || !wc) return;
+  const words = ta.value.trim().split(/\s+/).filter(w => w).length;
+  const ok = words >= 40;
+  wc.textContent = ok ? `${words} words,ready to submit` : `${words} words,need at least 40 to submit`;
+  wc.className = 'word-count' + (ok ? ' ok' : '');
+}
+
+// =====================
+// AI COACHING
+// =====================
+async function getCoaching(index) {
+  const btn = document.getElementById('coachBtn');
+  btn.disabled = true;
+  btn.textContent = 'Coaching...';
+
+  const q = questions[index];
+  const answer = state.answers[index];
+
+  if (state.demoMode) {
+    await new Promise(r => setTimeout(r, 1200));
+    const words = answer.trim().split(/\s+/).filter(w => w).length;
+    const cleared = words >= 80;
+    state.feedback[index] = {
+      feedback: cleared
+        ? 'Strong answer. You are being specific and grounded in real experience. This is exactly the kind of detail that produces usable marketing copy.'
+        : 'Good start, but push deeper. Give a specific example with a real name, real numbers, or a real moment. Vague pain does not convert. What specifically keeps them up at night?',
+      isCleared: cleared,
+      suggestion: cleared ? '' : 'Try this: finish the sentence "The moment I knew this was a real problem was when..."'
+    };
+    state.cleared[index] = cleared;
+    renderQuestion(index);
+    return;
+  }
+
+  const systemPrompt = `You are a direct, warm marketing strategist coaching an entrepreneur through a customer clarity exercise. 
+
+Your job:
+1. VALIDATE: Is their answer specific, visceral, and grounded in reality with real examples?
+2. FOCUS: If they drift off-topic, redirect them firmly but kindly
+3. DEPTH: Push for concrete details, real examples, real numbers, real emotions
+4. CLEAR: When genuinely strong, mark it cleared
+
+The question they are answering: "${q.title}"
+The purpose of this question: "${q.purpose}"
+
+Respond ONLY with valid JSON in this exact format:
+{"feedback": "your coaching message here", "isCleared": true or false, "suggestion": "optional one-line prompt to dig deeper if not cleared"}
+
+Rules: Be warm but direct. Vague answers are never cleared. If they have real specifics and at least 40 words, consider clearing. Never use bullet points in feedback.`;
+
+  try {
+    let response, data, text;
+
+    if (state.provider === 'anthropic') {
+      response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': state.apiKey,
+          'anthropic-version': '2023-06-01'
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 500,
+          system: systemPrompt,
+          messages: [{ role: 'user', content: `My answer: ${answer}` }]
+        })
+      });
+      data = await response.json();
+      text = data.content[0].text;
+    } else if (state.provider === 'openai') {
+      response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${state.apiKey}` },
+        body: JSON.stringify({
+          model: 'gpt-4o-mini',
+          max_tokens: 500,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: `My answer: ${answer}` }
+          ]
+        })
+      });
+      data = await response.json();
+      text = data.choices[0].message.content;
+    } else {
+      response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${state.apiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: systemPrompt + '\n\nMy answer: ' + answer }] }]
+        })
+      });
+      data = await response.json();
+      text = data.candidates[0].content.parts[0].text;
+    }
+
+    const clean = text.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(clean);
+    state.feedback[index] = parsed;
+    state.cleared[index] = parsed.isCleared;
+
+  } catch (err) {
+    state.feedback[index] = {
+      feedback: 'There was an issue reaching the AI. Check your API key and try again. Your answer has been saved.',
+      isCleared: false,
+      suggestion: ''
+    };
+    state.cleared[index] = false;
+  }
+
+  renderQuestion(index);
+}
+
+// =====================
+// LOCK + NAVIGATE
+// =====================
+function lockAnswer(index) {
+  state.locked[index] = true;
+  nextQuestion(index);
+}
+
+function nextQuestion(index) {
+  state.currentQuestion = index + 1;
+  if (state.currentQuestion >= 15) {
+    renderStoryGeneration();
+  } else {
+    renderQuestion(state.currentQuestion);
+  }
+  window.scrollTo({ top: document.getElementById('tool').offsetTop - 80, behavior: 'smooth' });
+}
+
+// =====================
+// STORY GENERATION
+// =====================
+function renderStoryGeneration() {
+  document.getElementById('questionsContainer').innerHTML = '';
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressLabel').textContent = 'All 15 questions complete';
+  document.getElementById('progressSection').textContent = 'Ready to generate your Marketing User Story';
+
+  const output = document.getElementById('storyOutput');
+  output.innerHTML = `
+    <div class="story-section">
+      <h2 class="display">You have answered all 15 questions.</h2>
+      <p class="story-sub">Generate your complete Marketing User Story,customer avatar, core pain, ripple effects, failed alternatives, messaging architecture, and ad copy foundation.</p>
+      <button class="btn-primary" onclick="generateStory()" style="font-size:16px;padding:18px 36px">Generate My Marketing User Story →</button>
+    </div>`;
+}
+
+async function generateStory() {
+  const output = document.getElementById('storyOutput');
+  output.innerHTML = `
+    <div class="story-section">
+      <div class="generating-state">
+        <div class="spinner"></div>
+        <p>Synthesizing your answers into a complete marketing story...</p>
+        <p style="font-size:13px;margin-top:8px;color:var(--muted)">This may take 30–60 seconds</p>
+      </div>
+    </div>`;
+
+  const answersText = questions.map((q, i) =>
+    `Q${i+1}: ${q.title}\nAnswer: ${state.answers[i] || 'Not answered'}`
+  ).join('\n\n');
+
+  const storyPrompt = `You are a world-class direct response copywriter synthesizing a customer clarity framework into a Marketing User Story.
+
+Based on these 15 answers, create a complete Marketing User Story with these sections:
+
+1. CUSTOMER AVATAR,Who they are in specific, vivid terms. Age, situation, income, location, mindset.
+2. THE CORE PAIN,The single most important problem. What keeps them up at night.
+3. THE RIPPLE EFFECTS,What else breaks down in their life because of this problem.
+4. FAILED ALTERNATIVES,What they have tried and exactly why it did not work.
+5. THE MOMENT BEFORE THEY FOUND YOU,The specific scene, time of day, physical setting, emotional state.
+6. YOUR SOLUTION,What you offer and how it actually solves the problem differently.
+7. THE TRANSFORMATION,What their life looks like after the solution works.
+8. MESSAGING ARCHITECTURE,Three headline angles, three scroll-stopping hooks, one positioning statement.
+9. AD COPY FOUNDATION,A complete problem-agitate-solve script ready for a 60-second video ad.
+
+Write in clear, direct prose. No bullet points. No generic language. Make it specific and visceral throughout.
+
+Here are the 15 answers:
+
+${answersText}`;
+
+  if (state.demoMode) {
+    await new Promise(r => setTimeout(r, 2500));
+    renderStoryOutput({
+      avatar: 'Your ideal customer is a driven entrepreneur, 35 to 48 years old, running a service-based business or personal brand. They have real results and real clients but cannot seem to translate that into consistent revenue or messaging that converts. They are not beginners. They are people who have been at this long enough to feel the specific frustration of being good at what they do and still feeling invisible.',
+      corePain: 'The core pain is the gap between how good they know they are and how that value comes across to the people they are trying to reach. They are not looking for motivation. They are looking for the thing that finally makes their message land.',
+      rippleEffects: 'The indecision bleeds into everything. They avoid making offers because they are not sure it is positioned right. They spend money on ads that do not convert and quietly blame the platform. Their partner stops asking how the business is going because the answer is always the same.',
+      failedAlternatives: 'They have tried generic online courses that gave them frameworks without application. Coaches who gave them confidence but not clarity. Masterminds where everyone was struggling with the same thing. They have tried posting more, niching down, and raising their prices without changing anything underneath.',
+      momentBefore: 'It is late. They have the laptop open and a half-finished caption on the screen that they know is not quite right but cannot figure out why. The business is real. The clients are real. But the words keep coming out wrong.',
+      solution: 'The Customer Clarity Framework is fifteen questions and an AI coaching loop that does not let you off the hook until your answers are specific enough to be useful. It produces a complete marketing user story,not a template, not a guide, but the actual language of your customer\'s pain in a form you can put directly into your ads.',
+      transformation: 'After completing the framework, clients describe a specific kind of relief. Not excitement,relief. The kind that comes from finally having words for something you have been feeling but could not articulate. One client said it felt like someone had been listening to her think out loud for years and finally handed her the transcript.',
+      messaging: 'Headline one: You are not invisible. Your message just does not match your customer yet. Headline two: The reason your ads are not working is not the budget. Headline three: What if the right words were already in your answers. Positioning statement: The Customer Clarity Framework helps entrepreneurs understand their ideal customer at the visceral level that actually converts,before spending a dollar on ads.',
+      adCopy: 'If you have tried ads and got nothing back, here is what actually happened. The ad was not the problem. The message was. Specifically, the message was built around what you do instead of what your customer is already feeling at eleven at night when they cannot sleep. There is a fifteen-question framework that changes that. It coaches you through every answer with AI until the answers are specific enough to use. At the end you get a complete marketing user story,the exact language of your customer\'s pain, in a form that converts. It is called the Customer Clarity Tool and you can start it for free today.'
+    });
+    return;
+  }
+
+  try {
+    let response, data, text;
+
+    if (state.provider === 'anthropic') {
+      response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': state.apiKey,
+          'anthropic-version': '2023-06-01'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 3000,
+          messages: [{ role: 'user', content: storyPrompt }]
+        })
+      });
+      data = await response.json();
+      text = data.content[0].text;
+    } else if (state.provider === 'openai') {
+      response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${state.apiKey}` },
+        body: JSON.stringify({
+          model: 'gpt-4o',
+          max_tokens: 3000,
+          messages: [{ role: 'user', content: storyPrompt }]
+        })
+      });
+      data = await response.json();
+      text = data.choices[0].message.content;
+    } else {
+      response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${state.apiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: storyPrompt }] }] })
+      });
+      data = await response.json();
+      text = data.candidates[0].content.parts[0].text;
+    }
+
+    renderStoryOutputRaw(text);
+
+  } catch (err) {
+    output.innerHTML = `<div class="story-section"><p style="color:var(--clay)">There was an error generating your story. Please check your API key and try again.</p><button class="btn-primary" onclick="generateStory()" style="margin-top:20px">Try Again</button></div>`;
+  }
+}
+
+function renderStoryOutputRaw(text) {
+  const output = document.getElementById('storyOutput');
+  const sections = text.split(/\n(?=\d+\.|[A-Z]{2,})/);
+
+  let html = `
+    <div class="story-section">
+      <h2 class="display">Your Marketing User Story</h2>
+      <p class="story-sub">Generated from your 15 answers. Copy, save, and use this as the foundation for every ad, email, and piece of content you create.</p>
+      <div style="white-space:pre-wrap;font-size:15px;line-height:1.8;color:var(--charcoal-soft)">${text}</div>
+      <button class="export-btn" onclick="exportStory()">Export as Text</button>
+      <button class="export-btn" onclick="window.print()">Print</button>
+    </div>`;
+  output.innerHTML = html;
+}
+
+function renderStoryOutput(sections) {
+  const output = document.getElementById('storyOutput');
+  output.innerHTML = `
+    <div class="story-section">
+      <h2 class="display">Your Marketing User Story</h2>
+      <p class="story-sub">Generated from your 15 answers. Use this as the foundation for every ad, email, and piece of content you create.</p>
+
+      <div class="story-block">
+        <h4>Customer Avatar</h4>
+        <p>${sections.avatar}</p>
+      </div>
+      <div class="story-block">
+        <h4>The Core Pain</h4>
+        <p>${sections.corePain}</p>
+      </div>
+      <div class="story-block">
+        <h4>The Ripple Effects</h4>
+        <p>${sections.rippleEffects}</p>
+      </div>
+      <div class="story-block">
+        <h4>Failed Alternatives</h4>
+        <p>${sections.failedAlternatives}</p>
+      </div>
+      <div class="story-block">
+        <h4>The Moment Before They Found You</h4>
+        <p>${sections.momentBefore}</p>
+      </div>
+      <div class="story-block">
+        <h4>Your Solution</h4>
+        <p>${sections.solution}</p>
+      </div>
+      <div class="story-block">
+        <h4>The Transformation</h4>
+        <p>${sections.transformation}</p>
+      </div>
+      <div class="story-block">
+        <h4>Messaging Architecture</h4>
+        <p>${sections.messaging}</p>
+      </div>
+      <div class="story-block">
+        <h4>Ad Copy Foundation</h4>
+        <p>${sections.adCopy}</p>
+      </div>
+
+      <button class="export-btn" onclick="exportStory()">Export as Text</button>
+    </div>`;
+}
+
+function exportStory() {
+  const content = document.querySelector('.story-section').innerText;
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'marketing-user-story.txt';
+  a.click(); URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
