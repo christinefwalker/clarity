@@ -229,7 +229,7 @@ nav{
     </div>
     <div class="modal-acts">
       <button class="m-p" onclick="saveKey()">Save to Profile</button>
-      <button class="m-s" onclick="demoMode()">Demo Mode</button>
+      <button class="m-s" onclick="closeModal()">Cancel</button>
     </div>
   </div>
 </div>
@@ -308,8 +308,8 @@ nav{
       <div class="ob-step"><span class="ob-step-n">2</span>If your answer needs more depth, the AI will ask a follow up. If it is strong, it confirms and moves on.</div>
       <div class="ob-step"><span class="ob-step-n">3</span>Each locked answer appears in the sidebar. At the end you get your full marketing user story.</div>
     </div>
-    <button class="btn-start" onclick="startSession()">Start the Conversation</button>
-    <p class="ob-note">First 3 questions free. Connect your API key to unlock the full session.</p>
+    <button class="btn-start" onclick="startSession()">Connect AI and Start</button>
+    <p class="ob-note">Bring your own API key from Claude, GPT-4, or Gemini. Your key stays in your browser and is never stored on any server.</p>
   </div>
 </div>
 
@@ -341,7 +341,6 @@ const QS = [
 let S = {
   provider: 'anthropic',
   apiKey: '',
-  demo: false,
   user: null,
   paid: false,
   started: false,
@@ -504,12 +503,6 @@ function saveKey() {
   }
 }
 
-function demoMode() {
-  S.demo = true;
-  closeModal();
-  if (!S.started) startSession();
-}
-
 function markConnected() {
   const labels = { anthropic: 'Claude 4.6', openai: 'GPT-4o', gemini: 'Gemini 2.0' };
   const label = labels[S.provider] || 'AI';
@@ -525,11 +518,10 @@ function markConnected() {
 // SESSION START
 // ================================
 function startSession() {
-  if (!S.apiKey && !S.demo) { openModal(); return; }
+  if (!S.apiKey) { openModal(); return; }
   S.started = true;
   showApp();
   sv();
-  // Ask first question
   setTimeout(() => askQuestion(0), 400);
 }
 
@@ -563,7 +555,7 @@ function restoreConvo() {
   // if we are mid-question, show current question again if not already shown
   msgs.scrollTop = msgs.scrollHeight;
   // if waiting at paywall
-  if (S.curQ >= 3 && !S.paid && !S.apiKey && !S.demo) {
+  if (S.curQ >= 3 && !S.paid && !S.apiKey) {
     lockInput();
   }
 }
@@ -625,7 +617,7 @@ function askQuestion(qi) {
   if (qi >= 15) { generateStory(); return; }
 
   // Paywall after Q3 if not paid and no API key
-  if (qi >= 3 && !S.paid && !S.apiKey && !S.demo) {
+  if (qi >= 3 && !S.paid && !S.apiKey) {
     showPaywallMessage();
     return;
   }
@@ -789,7 +781,7 @@ function appendPaywall(scroll = true) {
     <div class="pw-inner">
       <div class="pw-icon">🎯</div>
       <h2 class="pw-title">Great foundation.<br><em>Keep going.</em></h2>
-      <p class="pw-sub">Your first 3 answers are locked in. Connect your AI key or unlock the full session to continue through all 15 questions and get your complete Marketing User Story.</p>
+      <p class="pw-sub">Your first 3 answers are locked in. Unlock the full session to continue through all 15 questions and get your complete Marketing User Story.</p>
       <div class="pw-price">$47</div>
       <p class="pw-price-note">one time, includes all 15 questions and your marketing user story export</p>
       <div class="pw-feats">
@@ -814,21 +806,13 @@ function appendPaywall(scroll = true) {
           <option value="agency">Agency or Freelancer</option>
           <option value="other">Other</option>
         </select>
-        <div class="stripe-mock">
-          <div class="stripe-mock-lbl">Secured by Stripe</div>
-          <div class="stripe-mock-row">
-            <div class="stripe-mock-f" style="flex:2">4242 4242 4242 4242</div>
-            <div class="stripe-mock-f">12/27</div>
-            <div class="stripe-mock-f">123</div>
-          </div>
-          <div class="stripe-mock-note">Replace with your GHL Stripe embed or payment link to activate real payments.</div>
-        </div>
-        <button class="btn-pay" onclick="processPayment()">🔒 Pay $47 and Continue</button>
-        <p class="secure-note">🔒 Secured by Stripe. 7-day refund policy.</p>
+        <button class="btn-pay" onclick="goToStripe()">🔒 Pay $47 with Stripe</button>
+        <p class="secure-note">🔒 You will be taken to Stripe to complete your payment. Return here after checkout to continue.</p>
       </div>
       <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:16px;">
-        <p style="font-size:13px;color:var(--muted);margin-bottom:10px;text-align:center">Or connect your own API key to continue</p>
-        <button onclick="openModal()" style="width:100%;padding:11px;background:transparent;border:1.5px solid var(--border);border-radius:5px;font-size:13px;font-weight:700;cursor:pointer;color:var(--charcoal-soft);">Connect API Key and Continue Free</button>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:10px;text-align:center">Already paid? Or have your own API key?</p>
+        <button onclick="alreadyPaid()" style="width:100%;padding:11px;background:transparent;border:1.5px solid var(--border);border-radius:5px;font-size:13px;font-weight:700;cursor:pointer;color:var(--charcoal-soft);margin-bottom:8px;">I Already Paid, Continue</button>
+        <button onclick="openModal()" style="width:100%;padding:11px;background:transparent;border:1.5px solid var(--border);border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted);">Connect My Own API Key Instead</button>
       </div>
     </div>`;
   msgs.appendChild(wrap);
@@ -842,19 +826,32 @@ function showPaywallMessage() {
   lockInput();
 }
 
-function processPayment() {
+function goToStripe() {
   const f = document.getElementById('rfFirst')?.value.trim();
   const l = document.getElementById('rfLast')?.value.trim();
   const e = document.getElementById('rfEmail')?.value.trim();
   const b = document.getElementById('rfBiz')?.value;
-  if (!f || !l || !e || !b) { alert('Please fill in all fields'); return; }
-  if (!e.includes('@')) { alert('Please enter a valid email'); return; }
+  if (!f || !l || !e || !b) { alert('Please fill in all fields before continuing to payment.'); return; }
+  if (!e.includes('@')) { alert('Please enter a valid email address.'); return; }
+  // Save user info to profile so it is ready when they return
+  S.user = { first: f, last: l, email: e, biz: b };
+  saveProfile(); sv();
+  // Build Stripe URL with email prefill
+  const stripeBase = 'https://buy.stripe.com/eVqeVc5YNbaw6NidXcd3i00';
+  const stripeUrl = `${stripeBase}?prefilled_email=${encodeURIComponent(e)}`;
+  window.open(stripeUrl, '_blank');
+}
+
+function alreadyPaid() {
+  const f = document.getElementById('rfFirst')?.value.trim();
+  const l = document.getElementById('rfLast')?.value.trim();
+  const e = document.getElementById('rfEmail')?.value.trim();
+  const b = document.getElementById('rfBiz')?.value;
+  if (!f || !l || !e || !b) { alert('Please fill in your details so we can verify your account.'); return; }
   S.user = { first: f, last: l, email: e, biz: b };
   S.paid = true;
-  saveProfile(); // persist user and paid status to profile
-  sv();
+  saveProfile(); sv();
   updateNavUser();
-  // Remove paywall and continue
   document.getElementById('paywallMsg')?.remove();
   S.convo = S.convo.filter(m => m.role !== 'paywall');
   sv();
@@ -899,16 +896,12 @@ function updateProgress() {
 // AI CALL
 // ================================
 async function callAI(system, userMsg) {
-  if (S.demo || !S.apiKey) {
-    await new Promise(r => setTimeout(r, 900 + Math.random() * 600));
-    const w = wc(userMsg);
-    const good = w >= 40;
+  if (!S.apiKey) {
+    openModal();
     return {
-      response: good
-        ? `That is exactly the kind of specificity that makes marketing land. You named something real there. I am going to lock that in and we will move to the next question.`
-        : `Good direction. I want to push you a little further though. Can you give me one specific real example? A real person, a real moment, a real number. What actually happened?`,
-      status: good ? 'confirmed' : 'pushing',
-      score: good ? 5 : 2
+      response: 'You need to connect an AI key to continue. Click Connect AI in the top right.',
+      status: 'pushing',
+      score: 0
     };
   }
 
@@ -1007,9 +1000,8 @@ ${allAnswers}`;
 
   let storyText = '';
 
-  if (S.demo || !S.apiKey) {
-    await new Promise(r => setTimeout(r, 2200));
-    storyText = `This is a demo preview. Connect your API key to generate your real Marketing User Story from your 15 specific answers. The full output includes your customer avatar, core pain, messaging architecture with three headline angles, and a complete 60-second ad script ready to film.`;
+  if (!S.apiKey) {
+    storyText = 'No API key connected. Please connect your AI key and try again.';
   } else {
     try {
       let text;
